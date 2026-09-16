@@ -19,13 +19,13 @@ Crown & Cross avoids generic bright primaries or standard corporate grayscale. I
 
 ---
 
-## 2. Friction-Free Conversions
+## 2. Friction-Free Conversions & Persistent Intent
+ 
+Indian e-commerce is plagued by cumbersome authentication barriers and fragile shopping carts. Our design philosophy prioritizes the fastest, most resilient path from discovering a jersey to placing an order:
 
-Indian e-commerce is plagued by cumbersome authentication barriers. Our design philosophy prioritizes the fastest path from discovering a jersey to placing an order:
-
-1. **No Account Required:** A fan can find a kit, select their size, and checkout in under 30 seconds.
-2. **WhatsApp as the Customer Relationship Layer:** Rather than faceless support ticket bots, customers communicate directly with founder Jason Clement via WhatsApp (`+91 76959 24602`). This builds authentic human trust and fosters long-term collector loyalty.
-3. **Transparent Pan-India Free Shipping Meter:** Cart drawer gamification encourages fans to reach the ₹1,499 free delivery threshold without deceptive hidden checkout fees.
+1. **No Account Required, Yet Fully Persistent:** A fan can find a kit, select their size, and checkout in under 30 seconds. Rather than enforcing database accounts or session cookies, the cart state persists across page refreshes and browser tabs using scoped client-side storage (`cc_cart_v1`, `cc_customer_v1`). Customer address input is remembered, eliminating repetitive typing without compromising privacy.
+2. **The Direct `wa.me` Relationship Bridge:** Rather than faceless support ticket bots or leaky third-party payment gateways, customers communicate directly with founder Jason Clement via WhatsApp (`+91 76959 24602`). Migrating to the clean `wa.me` endpoint guarantees that mobile and desktop users bypass intermediate landing screens and initiate chats with complete, pre-composed order summaries.
+3. **Transparent Pan-India Free Shipping Meter:** Cart drawer gamification encourages fans to reach the ₹1,499 free delivery threshold without deceptive hidden checkout fees or unexpected delivery charges.
 4. **Dual-Channel B2B Inquiries (Email + WhatsApp):** Bulk team and tournament organizers require formal recordkeeping. By integrating automated transactional email (via Resend) into `/request-estimate` alongside instant WhatsApp triggers, clients receive both formal email paper trails and personal, real-time WhatsApp responsiveness.
 
 ---
@@ -33,16 +33,18 @@ Indian e-commerce is plagued by cumbersome authentication barriers. Our design p
 ## 3. Mobile-First Heritage Architecture
 
 Over 85% of football kit shoppers in India browse on mobile devices. The storefront is engineered from the ground up for handheld performance:
-- Touch-friendly swipeable image carousels.
-- Sticky WhatsApp order CTAs.
+- Touch-friendly swipeable image carousels with 45px swipe flick threshold.
+- Sticky WhatsApp order CTAs and dynamic badge animations.
 - Thumb-friendly bottom action drawers.
+- Instant route-change scroll reset preventing disorienting deep scroll retention.
 - Compact, high-contrast tables for sizing charts.
 
 ---
 
-## 4. Universal Ergonomics & The "Zero Dead Link" Policy
+## 4. Universal Ergonomics, Trust Engineering & The "Zero Dead Link" Policy
 
-Every customer touchpoint must respect device context and time:
+Every customer touchpoint must respect device context, human time, and buyer confidence:
 1. **Device-Agnostic Fluidity:** Whether viewing on a 4K desktop monitor, an iPad, or a compact 320px phone, the layout scales smoothly using CSS `clamp()` and fluid grid `minmax(min(100%, ...), 1fr)` with zero horizontal overflow.
-2. **Protocol Deep-Linking:** Ordering via WhatsApp directly invokes the installed application (`whatsapp://send`), bypassing intermediate landing pages with pre-filled items, sizing, and pricing.
-3. **Graceful Degradation:** When services are offline or unconfigured (such as missing Resend API keys or lack of a desktop WhatsApp client), the UI seamlessly offers working fallbacks so the customer is never stranded.
+2. **Protocol Deep-Linking:** Ordering via WhatsApp directly invokes the installed application (`whatsapp://send`) or the direct `wa.me` bridge, bypassing intermediate landing pages with pre-filled items, sizing, and pricing in clean ASCII text.
+3. **Trust Engineering & Payment Transparency:** Dynamic client-side UPI QR codes feature pre-filled transaction notes and references for bank statement clarity. 1-click order copying and visible trust badges (Verified UPI, Pan-India Dispatch, 5-7 Days Sizing Exchange) give buyers complete peace of mind.
+4. **Graceful Degradation:** When services are offline or unconfigured (such as missing Resend API keys or lack of a desktop WhatsApp client), the UI seamlessly offers working fallbacks so the customer is never stranded.

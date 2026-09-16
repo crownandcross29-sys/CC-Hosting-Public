@@ -44,21 +44,28 @@ CC-Hosting-Public/
 
 ## 2. State Management: `context/CartContext.jsx`
 
-The global shopping cart is managed via React Context and automatically synchronizes with browser `localStorage` under keys `cc_cart` and `cc_customer`. An `isLoaded` hydration gate ensures existing cart items and shipping details are safely restored upon page refresh without being wiped by the initial mount state.
+The global shopping cart is managed via React Context and automatically synchronizes with browser `localStorage` under scoped keys `cc_cart_v1` and `cc_customer_v1`. 
+
+### Key Capabilities & Reliability Guards:
+- **Scoped Storage Keys & Origin Validation:** Storage keys are namespaced (`cc_cart_v1`, `cc_customer_v1`) to isolate shopping session data and avoid collisions with external or legacy scripts.
+- **Hydration Gating (`isLoaded`):** Protects against Server-Side Rendering (SSR) discrepancies and prevents the initial empty state from prematurely wiping stored cart or customer information during component mount.
+- **Multi-Tab Synchronization:** A `window.addEventListener('storage', ...)` listener monitors cross-tab modifications, keeping badge counts and cart items in immediate sync across all open browser tabs.
+- **Sanitization & Payload Defensive Checks:** Enforces strict array typing on cart items, clamps quantities (`Math.max(1, qty)`), and sanitizes customer fields (`name`, `phone`, `address`, `city`, `pincode`, `note`).
+- **Standardized Order ID Generator:** Creates collision-resistant, human-friendly order references using base36 epoch timestamps and random entropy tokens (e.g. `CC-M3X9K2-7A9B`).
 
 ### Exposed Context Values:
-- **`items`**: Array of cart items `{ key, id, name, size, price, mrp, image, category, subCategory, quantity }`.
+- **`items`**: Array of validated cart items `{ key, id, name, size, price, mrp, image, category, subCategory, quantity }`.
 - **`customer` / `setCustomer`**: Delivery address details `{ name, phone, address, city, pincode, note }` preserved in `localStorage`.
-- **`isLoaded`**: Boolean indicating whether cart data has finished hydrating from `localStorage`.
-- **`addToCart(product, size, quantity)`**: Adds or updates an item in the cart.
-- **`updateQuantity(key, delta)`**: Modifies item count; automatically removes items when quantity reaches 0.
-- **`removeItem(key)`**: Removes a line item.
+- **`isLoaded`**: Boolean indicating whether cart and customer data have finished hydrating from `localStorage`.
+- **`addToCart(product, size, quantity)`**: Adds a new item or increments an existing line item matching `id` and `size`.
+- **`updateQuantity(key, delta)`**: Modifies item count; automatically removes line items when quantity drops to 0.
+- **`removeItem(key)`**: Deletes a specific line item by compound key.
 - **`subtotal`**: Sum of item prices × quantities.
 - **`isFreeShipping`**: Boolean (`subtotal >= 1499`).
-- **`shipping`**: `0` if empty or free shipping unlocked, otherwise `80` (Standard fee).
+- **`shipping`**: `0` if cart is empty or free shipping unlocked, otherwise `80` (Standard fee).
 - **`grandTotal`**: `subtotal + shipping`.
 - **`amountToFreeShipping`**: `Math.max(0, 1499 - subtotal)`.
-- **`freeShippingProgress`**: Percentage (`0` to `100%`) driving the progress bar.
+- **`freeShippingProgress`**: Percentage (`0` to `100%`) driving the Cart Drawer progress bar.
 - **`activeUpiOrder` / `setActiveUpiOrder`**: Controls the visibility and payload of the instant UPI QR payment modal.
 
 ---
@@ -78,8 +85,8 @@ Built to satisfy the exact requirement: **Swipe, Click Arrow, Count Dots**.
 ### Universal WhatsApp Engine (`lib/whatsapp.js`)
 Instead of legacy redirect links that drop text parameters, the storefront routes all WhatsApp actions through a specialized launcher:
 - **Direct Protocol Scheme (`whatsapp://send?phone=...&text=...`):** Immediately invokes the registered WhatsApp application on Windows, macOS, Android, and iOS (iPhone/iPad).
-- **Text Sanitization (`sanitizeWhatsAppText`):** Converts non-standard box-drawing characters (`━`, `─`, `═`) into standard hyphens (`-`), ensuring URL query strings are never truncated or corrupted by carrier webviews.
-- **Universal Web Fallback (`wa.me`):** Automatically routes through Meta's universal click-to-chat bridge to guarantee zero lost orders.
+- **Universal Web Fallback (`https://wa.me/`):** Migrated to Meta's official `wa.me/<phone>?text=...` click-to-chat bridge. Bypasses intermediate landing blockers, ensures synchronous desktop tab reuse, and provides seamless mobile browser fallback without dropping order parameters.
+- **Text Sanitization (`sanitizeWhatsAppText`):** Converts non-standard box-drawing characters (`━`, `─`, `═`) into standard hyphens (`-`), ensuring URL query strings are never truncated or corrupted by carrier webviews or intent handlers.
 
 Structured message payloads include:
 - Unique Order ID (`CC-XXXXXX`)
@@ -92,7 +99,10 @@ Encodes a standard NPCI UPI URI:
 ```
 upi://pay?pa=jasonclement.jm-1@okhdfcbank&pn=Jason%20Clement&am={grandTotal}&tn=Order%20{orderId}&tr={refId}&mode=02&cu=INR
 ```
-The `qrcode` package converts this URI to a high-resolution base64 PNG data URL in the user's browser, allowing payment through Google Pay, PhonePe, Paytm, or BHIM without any backend server. Includes 1-click WhatsApp screenshot dispatch.
+- **Live QR Rendering:** The `qrcode` package converts this URI to a high-resolution base64 PNG data URL in the user's browser, allowing payment through Google Pay, PhonePe, Paytm, or BHIM without any backend server.
+- **Transaction Reference & Note:** Pre-fills `tn=Order {orderId}` and `tr={refId}` for transparent bank-statement reconciliation.
+- **1-Click Order ID Copy:** Features an inline copy button with instantaneous visual confirmation feedback (`Copied!` tooltip/state).
+- **Screenshot Dispatch:** Includes direct WhatsApp launch button allowing customers to forward payment confirmation screenshots directly to Jason Clement.
 
 ---
 
@@ -146,16 +156,19 @@ To enable live transactional emailing in production:
 
 ---
 
-## 6. Multi-Screen Responsive Architecture
+## 6. Multi-Screen Responsive Architecture & Navigation Polish
 
 The storefront is engineered for seamless rendering across **Large**, **Medium**, and **Small** viewports:
 
 1. **Next.js 14 Viewport Export:** `app/layout.jsx` exports explicit `viewport` configurations (`width: 'device-width'`, `initialScale: 1`), enforcing proper mobile browser scaling.
-2. **Fluid Grid Layouts:** All grids use responsive auto-fit boundaries:
+2. **Route Navigation Scroll Reset:** `LayoutClientWrapper.jsx` executes an automatic `window.scrollTo({ top: 0, left: 0, behavior: 'instant' })` on pathname transitions, preventing deep scroll retention when moving between PDP, policy pages, and homepage.
+3. **Anchor Scrolling Offset:** The catalog anchor `#catalog` is configured with `scroll-margin-top: 80px` to clear the sticky navbar without obscuring filter controls.
+4. **Fluid Grid Layouts:** All grids use responsive auto-fit boundaries:
    - Catalog: `gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 260px), 1fr))'`
    - Featured: `gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))'`
    - PDP: `gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))'`
    - Footer: `gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 240px), 1fr))'`
-3. **No Horizontal Overflow:** Containers are protected by `maxWidth: 100%`, `overflow-x: hidden` on body, and `clamp()` spacing.
-4. **Touch Interactions:** `JerseyCarousel.jsx` features 45px swipe detection for natural mobile flick transitions.
-5. **Adaptive Modals:** `UpiModal.jsx` incorporates `maxHeight: '90vh'` and `overflowY: 'auto'` to maintain usability on compact and landscape screens.
+5. **No Horizontal Overflow:** Containers are protected by `maxWidth: 100%`, `overflow-x: hidden` on body, and `clamp()` spacing.
+6. **Touch Interactions:** `JerseyCarousel.jsx` features 45px swipe detection for natural mobile flick transitions.
+7. **Adaptive Modals:** `UpiModal.jsx` incorporates `maxHeight: '90vh'` and `overflowY: 'auto'` to maintain usability on compact and landscape screens.
+8. **Trust Guarantee Bar:** Footer integrates verified trust badges (Verified UPI, Direct WhatsApp, Pan-India Dispatch, 5-7 Days Sizing Exchange) for buyer confidence.

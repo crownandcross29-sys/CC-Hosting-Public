@@ -83,17 +83,19 @@ By default, the app uses Resend's sandbox (`onboarding@resend.dev`) and delivers
 - **Dynamic Catalog Filtering**:
   - Filter by Category: **Club**, **Country**, **★ Retro Classics**.
   - Filter by Quality Tier: **Player Version**, **Master Copy**, **Fan Version Set**, **Embroidered**, **Sublimation**.
-  - Live search by kit name, team, or season.
+  - Live search by kit name, team, or season with sticky navbar anchor scrolling offset.
 - **Product Detail Page (PDP)**:
   - **Interactive Image Carousel**: Mobile touch-swipe, desktop click-arrows, dot counts, and thumbnail selection.
   - Sizing selector with live measurement guide modal.
+  - Clean arrow breadcrumb navigation and route-change scroll-to-top reset.
   - One-click "Add to Cart" and direct "Buy Now with WhatsApp".
-- **Slide-out Cart Drawer**:
+- **Slide-out Cart Drawer & Persistent State**:
   - **Free Shipping Progress Meter**: Real-time progress towards the ₹1,499 free shipping threshold (Standard fee ₹80).
-  - Size and quantity adjustments with LocalStorage persistence.
+  - **Scoped LocalStorage Persistence**: Cart items and customer delivery info persist across page refreshes via scoped storage (`cc_cart_v1`, `cc_customer_v1`) with hydration gating (`isLoaded`) and cross-tab sync.
+  - Size and quantity adjustments with dynamic badge counter animations.
 - **Dual Checkout System**:
-  - **1. Universal WhatsApp Direct Order**: Deep links directly via `whatsapp://send` to the native WhatsApp application on Windows, macOS, Android, and iOS (iPhone/iPad) with pre-filled recipient (`+91 76959 24602`) and pre-typed order details. Automatic graceful fallback to WhatsApp Web if desktop client is not installed.
-  - **2. Instant UPI QR Code Generator**: Generates client-side dynamic QR codes for payee **Jason Clement** (`jasonclement.jm-1@okhdfcbank`).
+  - **1. Universal WhatsApp Direct Order**: Deep links directly via `whatsapp://send` and the modern `https://wa.me/` click-to-chat bridge to native WhatsApp applications across Windows, macOS, Android, and iOS (iPhone/iPad). Pre-fills recipient (`+91 76959 24602`) and pre-typed order details with ASCII-sanitized text. Synchronous tab reuse and graceful WhatsApp Web fallback on desktop.
+  - **2. Instant UPI QR Code Generator**: Generates client-side dynamic QR codes for payee **Jason Clement** (`jasonclement.jm-1@okhdfcbank`). Features pre-filled transaction reference (`tr`), order note (`tn`), and 1-click Order ID copy button with clipboard feedback.
 - **📱 Full Responsive Multi-Screen Compatibility**:
   - **Large Screens (Desktop & 4K):** Proportional fluid typography (`clamp()`), max-width boundaries, and clean multi-column layouts.
   - **Medium Screens (Tablets & Laptops):** 2–3 column adaptive grids and seamless navigation transitions.
@@ -107,6 +109,7 @@ By default, the app uses Resend's sandbox (`onboarding@resend.dev`) and delivers
   - Returns & Exchange Policy (`/returns-policy`) — 5–7 days sizing exchange.
   - Terms of Service (`/terms`) & Privacy Policy (`/privacy`).
   - **Bulk & Team Estimate Request Form (`/request-estimate`)**: Automated email quotation dispatch powered by **Resend** to `crownandcross29@gmail.com` with instant WhatsApp fallback.
+  - **Trust Guarantee Footer**: Verified UPI payment, Direct WhatsApp support, Pan-India dispatch, and 5-7 days size exchange badges.
 
 ---
 

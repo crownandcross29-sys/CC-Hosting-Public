@@ -13,7 +13,8 @@ import {
   Ruler,
   ShoppingBag,
   MessageCircle,
-  X
+  X,
+  ChevronRight
 } from 'lucide-react';
 
 export default function ProductDetailPage() {
@@ -28,6 +29,7 @@ export default function ProductDetailPage() {
   const [showSizeModal, setShowSizeModal] = useState(false);
 
   useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     fetch('/data/products.json')
       .then((res) => res.json())
       .then((data) => {
@@ -42,7 +44,10 @@ export default function ProductDetailPage() {
         }
       })
       .catch((err) => console.error(err))
-      .finally(() => setLoading(false));
+      .finally(() => {
+        setLoading(false);
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      });
   }, [id]);
 
   if (loading) {
@@ -60,11 +65,12 @@ export default function ProductDetailPage() {
           Jersey Not Found
         </h2>
         <p style={{ color: 'var(--text-secondary)', marginBottom: '24px' }}>
-          The requested kit could not be located in the Crown & Cross catalog.
+          The requested football kit does not exist or has been discontinued.
         </p>
         <Link
           href="/#catalog"
           style={{
+            display: 'inline-block',
             padding: '12px 24px',
             backgroundColor: 'var(--gold-primary)',
             color: '#0d140f',
@@ -72,7 +78,7 @@ export default function ProductDetailPage() {
             fontWeight: 700
           }}
         >
-          Return to Catalog
+          Return to Jersey Catalog
         </Link>
       </div>
     );
@@ -86,24 +92,70 @@ export default function ProductDetailPage() {
   const directWhatsAppText = `Hello Crown & Cross, I would like to buy:\n\nKit: ${product.name}\nQuality: ${product.subCategory}\nSize: ${selectedSize}\nQuantity: ${quantity}\nPrice: ₹${product.price * quantity}\n\nPlease confirm availability!`;
   const directWhatsAppUrl = getWhatsAppUrl(directWhatsAppText);
 
-  const relatedKits = allProducts
-    .filter((p) => p.id !== product.id && p.category === product.category)
+  const relatedProducts = allProducts
+    .filter((p) => p.id !== product.id && (p.category === product.category || p.subCategory === product.subCategory))
     .slice(0, 3);
+
+  const categoryHash = product.category
+    ? `/#${product.category.toLowerCase().trim()}`
+    : '/#catalog';
 
   return (
     <div style={{ maxWidth: '1280px', margin: '40px auto 80px', padding: '0 24px' }}>
       {/* Breadcrumbs */}
-      <div style={{ display: 'flex', gap: '8px', fontSize: '12px', color: 'var(--text-muted)', marginBottom: '28px' }}>
-        <Link href="/" style={{ color: 'var(--text-secondary)' }}>
+      <nav
+        aria-label="Breadcrumb"
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: '8px',
+          fontSize: '13px',
+          color: 'var(--text-muted)',
+          marginBottom: '28px',
+          lineHeight: 1.5
+        }}
+      >
+        <Link
+          href="/"
+          className="breadcrumb-link"
+          style={{
+            color: 'var(--text-secondary)',
+            display: 'inline-flex',
+            alignItems: 'center',
+            textDecoration: 'none'
+          }}
+        >
           Home
         </Link>
-        <span>/</span>
-        <Link href="/#catalog" style={{ color: 'var(--text-secondary)' }}>
-          {product.category}
+
+        <ChevronRight size={13} color="var(--text-muted)" style={{ flexShrink: 0 }} />
+
+        <Link
+          href={categoryHash}
+          className="breadcrumb-link"
+          style={{
+            color: 'var(--text-secondary)',
+            display: 'inline-flex',
+            alignItems: 'center',
+            textDecoration: 'none'
+          }}
+        >
+          {product.category || 'Catalog'}
         </Link>
-        <span>/</span>
-        <span style={{ color: 'var(--gold-primary)' }}>{product.name}</span>
-      </div>
+
+        <ChevronRight size={13} color="var(--text-muted)" style={{ flexShrink: 0 }} />
+
+        <span
+          style={{
+            color: 'var(--gold-primary)',
+            fontWeight: 600
+          }}
+          aria-current="page"
+        >
+          {product.name}
+        </span>
+      </nav>
 
       {/* Main PDP Grid */}
       <div

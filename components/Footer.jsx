@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, Truck, ShieldCheck, RefreshCw, MessageCircle, ArrowUp } from 'lucide-react';
 import { getWhatsAppUrl, triggerWhatsApp } from '../lib/whatsapp';
 
 export default function Footer() {
@@ -12,200 +12,236 @@ export default function Footer() {
     }
   };
 
+  const scrollToTop = () => {
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   return (
-    <footer
-      style={{
-        backgroundColor: 'var(--olive-deep)',
-        borderTop: '1px solid var(--border-subtle)',
-        marginTop: '80px',
-        padding: '60px 24px 30px'
-      }}
-    >
-      <div
-        style={{
-          maxWidth: '1360px',
-          margin: '0 auto',
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 240px), 1fr))',
-          gap: '40px',
-          marginBottom: '50px'
-        }}
-      >
-        {/* Brand Column */}
-        <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-            <img
-              src="/images/logo.jpeg"
-              alt="Crown & Cross Logo"
-              style={{
-                width: '40px',
-                height: '40px',
-                borderRadius: '8px',
-                border: '1px solid var(--gold-primary)',
-                objectFit: 'cover'
-              }}
-            />
-            <span className="serif-heading" style={{ fontSize: '20px', fontWeight: 800, color: 'var(--gold-primary)' }}>
-              CROWN & CROSS
+    <footer className="cc-footer">
+      <div className="footer-container">
+        {/* Top Trust Guarantees Bar */}
+        <div className="trust-bar">
+          <div className="trust-item">
+            <div className="trust-icon-box">
+              <Truck size={22} />
+            </div>
+            <div className="trust-text">
+              <div className="trust-title">Free Pan-India Delivery</div>
+              <div className="trust-sub">On orders ₹1,499 and above</div>
+            </div>
+          </div>
+
+          <div className="trust-item">
+            <div className="trust-icon-box">
+              <ShieldCheck size={22} />
+            </div>
+            <div className="trust-text">
+              <div className="trust-title">Match-Grade Kits</div>
+              <div className="trust-sub">Player versions &amp; master copies</div>
+            </div>
+          </div>
+
+          <div className="trust-item">
+            <div className="trust-icon-box">
+              <RefreshCw size={20} />
+            </div>
+            <div className="trust-text">
+              <div className="trust-title">7-Day Sizing Exchange</div>
+              <div className="trust-sub">Hassle-free size replacements</div>
+            </div>
+          </div>
+
+          <div className="trust-item">
+            <div className="trust-icon-box wa-icon-box">
+              <MessageCircle size={22} />
+            </div>
+            <div className="trust-text">
+              <div className="trust-title">Live WhatsApp Support</div>
+              <div className="trust-sub">Direct line: +91 76959 24602</div>
+            </div>
+          </div>
+        </div>
+
+        {/* 4 Main Footer Navigation Columns */}
+        <div className="footer-grid">
+          {/* Brand Column */}
+          <div className="footer-col brand-col">
+            <div className="brand-header">
+              <img
+                src="/images/logo.jpeg"
+                alt="Crown & Cross Logo"
+                className="footer-logo"
+              />
+              <span className="serif-heading footer-brand-title">
+                CROWN &amp; CROSS
+              </span>
+            </div>
+            <p className="brand-description">
+              "Some wear fashion. We wear football." Crafted for kit connoisseurs across India. Premium player versions, master copies, and immortal retros.
+            </p>
+            <div className="brand-location">
+              📍 Based in <strong>Chennai, Tamil Nadu</strong>
+            </div>
+            <div className="brand-story-link">
+              <Link
+                href="/about"
+                className="footer-link story-link"
+              >
+                <span>📖 Our Story &amp; Brand Ethos</span>
+                <span className="story-arrow">→</span>
+              </Link>
+            </div>
+          </div>
+
+          {/* Quick Shopping Links */}
+          <div className="footer-col">
+            <h4 className="col-heading">Collections</h4>
+            <ul className="footer-link-list">
+              <li>
+                <Link href="/#club" onClick={() => handleHashNav('club')} className="footer-link">
+                  Club Kits (23/24 &amp; 24/25)
+                </Link>
+              </li>
+              <li>
+                <Link href="/#country" onClick={() => handleHashNav('country')} className="footer-link">
+                  National Teams
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/#retro"
+                  onClick={() => handleHashNav('retro')}
+                  className="footer-link retro-link"
+                >
+                  <Sparkles size={12} /> Immortal Retro Editions
+                </Link>
+              </li>
+              <li>
+                <Link href="/size-guide" className="footer-link">
+                  Sizing &amp; Fit Specifications
+                </Link>
+              </li>
+              <li>
+                <Link href="/request-estimate" className="footer-link">
+                  Bulk &amp; Team Estimates
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Trust & Customer Support */}
+          <div className="footer-col">
+            <h4 className="col-heading">Support &amp; Orders</h4>
+            <ul className="footer-link-list">
+              <li>
+                <a
+                  href={getWhatsAppUrl("Hello Crown & Cross, I have an inquiry about football jerseys.")}
+                  onClick={(e) => triggerWhatsApp({ text: "Hello Crown & Cross, I have an inquiry about football jerseys.", e })}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer-wa-link"
+                >
+                  💬 WhatsApp: +91 76959 24602
+                </a>
+              </li>
+              <li>
+                <a href="mailto:crownandcross29@gmail.com" className="footer-link">
+                  ✉️ crownandcross29@gmail.com
+                </a>
+              </li>
+              <li className="footer-info-item">
+                ⏱️ UPI Payee: <strong>Jason Clement</strong>
+              </li>
+              <li className="delivery-item">
+                <Link
+                  href="/shipping-policy"
+                  className="delivery-link"
+                  title="View full Shipping & Delivery Policy"
+                >
+                  <span>📦 Delivery Estimates:</span>
+                  <span className="delivery-arrow">→</span>
+                </Link>
+                <ul className="delivery-subpoints">
+                  <li>• <strong>Metro:</strong> 3–5 Days</li>
+                  <li>• <strong>Rest of India:</strong> 5–8 Days</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+
+          {/* Legal & Policies */}
+          <div className="footer-col">
+            <h4 className="col-heading">Policies</h4>
+            <ul className="footer-link-list">
+              <li>
+                <Link href="/shipping-policy" className="footer-link">
+                  Shipping &amp; Delivery Policy (₹80 / Free &gt; ₹1499)
+                </Link>
+              </li>
+              <li>
+                <Link href="/returns-policy" className="footer-link">
+                  Returns &amp; Sizing Exchange (5–7 Days)
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="footer-link">
+                  Terms of Service
+                </Link>
+              </li>
+              <li>
+                <Link href="/privacy" className="footer-link">
+                  Privacy Policy &amp; Cookies
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Accepted Payment Methods (Strictly Verified Supported Methods) */}
+        <div className="payments-banner">
+          <div className="payments-info">
+            <span className="payments-title">
+              🔒 Verified UPI Payment Modes
+            </span>
+            <span className="payments-sub">
+              100% Secure Prepaid Orders • Payee: <strong>Jason Clement</strong> (<code>jasonclement.jm-1@okhdfcbank</code>)
             </span>
           </div>
-          <p style={{ fontSize: '14px', lineHeight: 1.6, color: 'var(--text-secondary)', marginBottom: '14px' }}>
-            "Some wear fashion. We wear football." Crafted for purists and kit connoisseurs across India. Premium player versions, master copies, and immortal retros.
-          </p>
-          <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
-            📍 Based in <strong>Chennai, Tamil Nadu</strong>
+
+          <div className="payments-badges">
+            <span className="payment-badge">⚡ UPI QR</span>
+            <span className="payment-badge">Google Pay</span>
+            <span className="payment-badge">PhonePe</span>
+            <span className="payment-badge">Paytm</span>
+            <span className="payment-badge">BHIM</span>
+            <span className="payment-badge">CRED</span>
           </div>
         </div>
 
-        {/* Quick Shopping Links */}
-        <div>
-          <h4
-            style={{
-              fontSize: '13px',
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              color: 'var(--gold-primary)',
-              fontWeight: 700,
-              marginBottom: '18px'
-            }}
-          >
-            Collections
-          </h4>
-          <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '14px' }}>
-            <li>
-              <Link href="/#club" onClick={() => handleHashNav('club')} style={{ color: 'var(--text-secondary)' }}>
-                Club Kits (23/24 & 24/25)
-              </Link>
-            </li>
-            <li>
-              <Link href="/#country" onClick={() => handleHashNav('country')} style={{ color: 'var(--text-secondary)' }}>
-                National Teams
-              </Link>
-            </li>
-            <li>
-              <Link href="/#retro" onClick={() => handleHashNav('retro')} style={{ color: 'var(--gold-light)', display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
-                <Sparkles size={12} /> Immortal Retro Editions
-              </Link>
-            </li>
-            <li>
-              <Link href="/size-guide" style={{ color: 'var(--text-secondary)' }}>
-                Sizing & Fit Specifications
-              </Link>
-            </li>
-            <li>
-              <Link href="/request-estimate" style={{ color: 'var(--text-secondary)' }}>
-                Bulk & Team Estimates
-              </Link>
-            </li>
-          </ul>
-        </div>
+        {/* Bottom Bar */}
+        <div className="bottom-bar">
+          <div className="copyright-text">
+            © {new Date().getFullYear()} <strong>Crown &amp; Cross</strong>. Wear Your Club. Wear Your Story. All rights reserved.
+          </div>
 
-        {/* Trust & Customer Support */}
-        <div>
-          <h4
-            style={{
-              fontSize: '13px',
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              color: 'var(--gold-primary)',
-              fontWeight: 700,
-              marginBottom: '18px'
-            }}
-          >
-            Support & Orders
-          </h4>
-          <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '14px' }}>
-            <li>
-              <a
-                href={getWhatsAppUrl("Hello Crown & Cross, I have an inquiry about football jerseys.")}
-                onClick={(e) => triggerWhatsApp({ text: "Hello Crown & Cross, I have an inquiry about football jerseys.", e })}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ color: '#4ade80', fontWeight: 600, cursor: 'pointer' }}
-              >
-                💬 WhatsApp: +91 76959 24602
-              </a>
-            </li>
-            <li>
-              <a href="mailto:crownandcross29@gmail.com" style={{ color: 'var(--text-secondary)' }}>
-                ✉️ crownandcross29@gmail.com
-              </a>
-            </li>
-            <li style={{ color: 'var(--text-secondary)', fontSize: '13px' }}>
-              ⏱️ UPI Payee: <strong>Jason Clement</strong>
-            </li>
-            <li style={{ color: 'var(--text-secondary)', fontSize: '13px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>📦 Delivery Estimates:</span>
-              <ul style={{ listStyle: 'none', paddingLeft: '18px', display: 'flex', flexDirection: 'column', gap: '3px', color: 'var(--text-muted)' }}>
-                <li>• <strong>Metro:</strong> 3–5 Days</li>
-                <li>• <strong>Rest of India:</strong> 5–8 Days</li>
-              </ul>
-            </li>
-          </ul>
-        </div>
+          <div className="bottom-actions">
+            <div className="bottom-meta">
+              <span>Powered by Next.js</span>
+              <span>•</span>
+              <span>Founder: Jason Clement</span>
+            </div>
 
-        {/* Legal & Policies */}
-        <div>
-          <h4
-            style={{
-              fontSize: '13px',
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              color: 'var(--gold-primary)',
-              fontWeight: 700,
-              marginBottom: '18px'
-            }}
-          >
-            Policies
-          </h4>
-          <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '14px' }}>
-            <li>
-              <Link href="/shipping-policy" style={{ color: 'var(--text-secondary)' }}>
-                Shipping & Delivery Policy (₹80 / Free &gt; ₹1499)
-              </Link>
-            </li>
-            <li>
-              <Link href="/returns-policy" style={{ color: 'var(--text-secondary)' }}>
-                Returns & Sizing Exchange (5–7 Days)
-              </Link>
-            </li>
-            <li>
-              <Link href="/terms" style={{ color: 'var(--text-secondary)' }}>
-                Terms of Service
-              </Link>
-            </li>
-            <li>
-              <Link href="/privacy" style={{ color: 'var(--text-secondary)' }}>
-                Privacy Policy & Cookies
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      {/* Bottom Bar */}
-      <div
-        style={{
-          maxWidth: '1360px',
-          margin: '0 auto',
-          paddingTop: '24px',
-          borderTop: '1px solid var(--border-subtle)',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          fontSize: '12px',
-          color: 'var(--text-muted)',
-          flexWrap: 'wrap',
-          gap: '12px'
-        }}
-      >
-        <div>
-          © {new Date().getFullYear()} <strong>Crown & Cross</strong>. Wear Your Club. Wear Your Story. All rights reserved.
-        </div>
-        <div style={{ display: 'flex', gap: '16px' }}>
-          <span>Powered by Next.js & Vercel</span>
-          <span>•</span>
-          <span>Founder: Jason Clement</span>
+            <button
+              onClick={scrollToTop}
+              className="back-to-top-btn"
+              title="Scroll back to top"
+            >
+              <ArrowUp size={13} color="var(--gold-primary)" />
+              <span>Back to Top</span>
+            </button>
+          </div>
         </div>
       </div>
     </footer>

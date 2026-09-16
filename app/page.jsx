@@ -62,20 +62,31 @@ export default function HomePage() {
     };
 
     const scrollToCatalog = () => {
-      setTimeout(() => {
+      const performScroll = () => {
         const el = document.getElementById('catalog');
         if (el) {
-          el.scrollIntoView({ behavior: 'smooth' });
+          const rect = el.getBoundingClientRect();
+          const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+          const targetY = rect.top + scrollTop - 80; // 80px offset for sticky navbar
+          window.scrollTo({ top: Math.max(0, targetY), behavior: 'smooth' });
         }
-      }, 50);
+      };
+
+      // Quick attempt + delayed attempt after images/layout resolve
+      setTimeout(performScroll, 60);
+      setTimeout(performScroll, 240);
     };
 
     // Run on initial mount
     handleHashSync();
 
-    // Listen for hashchange events
+    // Listen for hashchange and history popstate events
     window.addEventListener('hashchange', handleHashSync);
-    return () => window.removeEventListener('hashchange', handleHashSync);
+    window.addEventListener('popstate', handleHashSync);
+    return () => {
+      window.removeEventListener('hashchange', handleHashSync);
+      window.removeEventListener('popstate', handleHashSync);
+    };
   }, []);
 
   // Filter products

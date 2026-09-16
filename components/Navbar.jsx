@@ -24,189 +24,90 @@ export default function Navbar() {
         position: 'sticky',
         top: 0,
         zIndex: 50,
-        backgroundColor: 'rgba(13, 20, 15, 0.92)',
-        backdropFilter: 'blur(12px)',
+        backgroundColor: 'rgba(13, 20, 15, 0.94)',
+        backdropFilter: 'blur(14px)',
         borderBottom: '1px solid var(--border-subtle)',
         transition: 'all 0.2s ease'
       }}
     >
       {/* Top Notification Announcement Bar */}
-      <div
-        style={{
-          backgroundColor: 'var(--olive-accent)',
-          borderBottom: '1px solid rgba(200, 169, 106, 0.15)',
-          padding: '6px 16px',
-          textAlign: 'center',
-          fontSize: '11px',
-          letterSpacing: '0.06em',
-          textTransform: 'uppercase',
-          fontWeight: 700,
-          color: 'var(--gold-light)',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          gap: '12px'
-        }}
-      >
-        <span>⚡ PAN-INDIA DELIVERY</span>
-        <span>•</span>
-        <span>FREE SHIPPING ON ORDERS ABOVE ₹1,499</span>
-        <span>•</span>
-        <span>5–7 DAYS SIZING EXCHANGE</span>
+      <div className="navbar-announcement">
+        <span className="announcement-primary">⚡ FREE SHIPPING ON ORDERS ABOVE ₹1,499</span>
+        <span className="announcement-divider">•</span>
+        <span className="announcement-secondary">PAN-INDIA DELIVERY</span>
+        <span className="announcement-divider hide-mobile">•</span>
+        <span className="announcement-tertiary hide-mobile">5–7 DAYS SIZING EXCHANGE</span>
       </div>
 
       {/* Main Navbar */}
-      <div
-        style={{
-          maxWidth: '1360px',
-          margin: '0 auto',
-          padding: '14px 24px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: '20px'
-        }}
-      >
+      <div className="navbar-inner">
         {/* Brand Logo & Name */}
-        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+        <Link href="/" className="brand-link">
           <img
             src="/images/logo.jpeg"
             alt="Crown & Cross Emblem"
-            style={{
-              width: '42px',
-              height: '42px',
-              borderRadius: '10px',
-              border: '1px solid var(--gold-primary)',
-              objectFit: 'cover',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.5)'
-            }}
+            className="brand-logo-img"
           />
-          <div>
-            <span
-              className="serif-heading"
-              style={{
-                fontSize: '22px',
-                fontWeight: 800,
-                letterSpacing: '-0.02em',
-                color: 'var(--gold-primary)',
-                display: 'block',
-                lineHeight: 1
-              }}
-            >
+          <div className="brand-text-wrapper">
+            <span className="serif-heading brand-title">
               CROWN & CROSS
             </span>
-            <span
-              style={{
-                fontSize: '10px',
-                color: 'var(--text-secondary)',
-                letterSpacing: '0.1em',
-                textTransform: 'uppercase',
-                fontWeight: 600,
-                display: 'block',
-                marginTop: '3px'
-              }}
-            >
+            <span className="brand-subtitle">
               Football Jerseys • Chennai
             </span>
           </div>
         </Link>
 
         {/* Desktop Nav Links */}
-        <nav
-          style={{
-            display: 'none',
-            gap: '28px',
-            alignItems: 'center',
-            fontSize: '13px',
-            fontWeight: 600,
-            letterSpacing: '0.04em',
-            textTransform: 'uppercase'
-          }}
-          className="desktop-nav"
-        >
-          <Link href="/#catalog" onClick={() => handleHashNav('catalog')} style={{ color: 'var(--text-secondary)', transition: 'color 0.15s' }}>
+        <nav className="desktop-nav">
+          <Link href="/#catalog" onClick={() => handleHashNav('catalog')} className="desktop-nav-link">
             Catalog
           </Link>
-          <Link href="/#club" onClick={() => handleHashNav('club')} style={{ color: 'var(--text-secondary)', transition: 'color 0.15s' }}>
+          <Link href="/#club" onClick={() => handleHashNav('club')} className="desktop-nav-link">
             Club
           </Link>
-          <Link href="/#country" onClick={() => handleHashNav('country')} style={{ color: 'var(--text-secondary)', transition: 'color 0.15s' }}>
+          <Link href="/#country" onClick={() => handleHashNav('country')} className="desktop-nav-link">
             Country
           </Link>
-          <Link href="/#retro" onClick={() => handleHashNav('retro')} style={{ color: 'var(--gold-primary)', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+          <Link href="/#retro" onClick={() => handleHashNav('retro')} className="desktop-nav-link retro-highlight">
             <Sparkles size={13} /> Retro Kits
           </Link>
-          <Link href="/size-guide" style={{ color: 'var(--text-secondary)', transition: 'color 0.15s' }}>
+          <Link href="/size-guide" className="desktop-nav-link">
             Size Guide
           </Link>
-          <Link href="/about" style={{ color: 'var(--text-secondary)', transition: 'color 0.15s' }}>
+          <Link href="/about" className="desktop-nav-link">
             Our Story
           </Link>
-          <Link href="/request-estimate" style={{ color: 'var(--text-secondary)', transition: 'color 0.15s' }}>
+          <Link href="/request-estimate" className="desktop-nav-link">
             Bulk / Team
           </Link>
         </nav>
 
         {/* Right Action Icons */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+        <div className="navbar-actions">
           {/* WhatsApp Direct Chat */}
           <a
             href={getWhatsAppUrl("Hello Crown & Cross, I have an inquiry regarding jerseys")}
             onClick={(e) => triggerWhatsApp({ text: "Hello Crown & Cross, I have an inquiry regarding jerseys", e })}
             target="_blank"
             rel="noopener noreferrer"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              fontSize: '12px',
-              fontWeight: 700,
-              padding: '7px 12px',
-              borderRadius: '999px',
-              backgroundColor: 'rgba(34, 197, 94, 0.12)',
-              border: '1px solid rgba(34, 197, 94, 0.3)',
-              color: '#4ade80'
-            }}
+            className="nav-wa-btn"
+            title="Chat on WhatsApp"
           >
             <MessageCircle size={15} />
-            <span className="hide-mobile">+91 76959 24602</span>
+            <span className="hide-tablet-mobile">+91 76959 24602</span>
           </a>
 
           {/* Cart Drawer Toggle */}
           <button
             onClick={() => setIsCartOpen(true)}
-            style={{
-              position: 'relative',
-              padding: '9px 18px',
-              borderRadius: '999px',
-              backgroundColor: 'var(--gold-primary)',
-              color: '#0d140f',
-              border: 'none',
-              fontSize: '13px',
-              fontWeight: 700,
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              boxShadow: '0 4px 14px rgba(200, 169, 106, 0.25)'
-            }}
+            className="nav-cart-btn"
+            aria-label="Open Shopping Cart"
           >
             <ShoppingBag size={15} />
-            <span>Cart</span>
+            <span className="cart-text">Cart</span>
             {totalItems > 0 && (
-              <span
-                style={{
-                  backgroundColor: '#0d140f',
-                  color: 'var(--gold-primary)',
-                  fontSize: '11px',
-                  fontWeight: 800,
-                  width: '20px',
-                  height: '20px',
-                  borderRadius: '50%',
-                  display: 'inline-grid',
-                  placeItems: 'center'
-                }}
-              >
+              <span className="cart-badge">
                 {totalItems}
               </span>
             )}
@@ -216,17 +117,7 @@ export default function Navbar() {
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="mobile-menu-btn"
-            style={{
-              background: 'transparent',
-              border: '1px solid var(--border-subtle)',
-              borderRadius: '8px',
-              color: 'var(--text-primary)',
-              padding: '8px 10px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer'
-            }}
+            aria-label="Toggle Navigation Menu"
           >
             {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
@@ -235,38 +126,27 @@ export default function Navbar() {
 
       {/* Mobile Drawer Dropdown */}
       {mobileMenuOpen && (
-        <div
-          style={{
-            backgroundColor: 'var(--bg-surface)',
-            borderBottom: '1px solid var(--border-subtle)',
-            padding: '16px 24px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '14px',
-            fontSize: '14px',
-            fontWeight: 600
-          }}
-        >
-          <Link href="/#catalog" onClick={() => handleHashNav('catalog')}>
+        <div className="mobile-dropdown-menu">
+          <Link href="/#catalog" onClick={() => handleHashNav('catalog')} className="mobile-dropdown-link">
             Catalog
           </Link>
-          <Link href="/#club" onClick={() => handleHashNav('club')}>
+          <Link href="/#club" onClick={() => handleHashNav('club')} className="mobile-dropdown-link">
             Club Jerseys
           </Link>
-          <Link href="/#country" onClick={() => handleHashNav('country')}>
+          <Link href="/#country" onClick={() => handleHashNav('country')} className="mobile-dropdown-link">
             Country Kits
           </Link>
-          <Link href="/#retro" onClick={() => handleHashNav('retro')} style={{ color: 'var(--gold-primary)', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-            <Sparkles size={13} /> Retro Classics
+          <Link href="/#retro" onClick={() => handleHashNav('retro')} className="mobile-dropdown-link retro-mobile-link">
+            <Sparkles size={14} /> Immortal Retro Editions
           </Link>
-          <Link href="/size-guide" onClick={() => setMobileMenuOpen(false)}>
-            Size & Fit Guide
+          <Link href="/size-guide" onClick={() => setMobileMenuOpen(false)} className="mobile-dropdown-link">
+            Size &amp; Fit Guide
           </Link>
-          <Link href="/about" onClick={() => setMobileMenuOpen(false)}>
-            About Us / Our Story
+          <Link href="/about" onClick={() => setMobileMenuOpen(false)} className="mobile-dropdown-link">
+            Our Story &amp; Brand Ethos
           </Link>
-          <Link href="/request-estimate" onClick={() => setMobileMenuOpen(false)}>
-            Bulk / Team Estimate
+          <Link href="/request-estimate" onClick={() => setMobileMenuOpen(false)} className="mobile-dropdown-link">
+            Bulk &amp; Team Estimates
           </Link>
           <a
             href={getWhatsAppUrl("Hello Crown & Cross, I have an inquiry regarding jerseys")}
@@ -276,37 +156,13 @@ export default function Navbar() {
             }}
             target="_blank"
             rel="noopener noreferrer"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              color: '#4ade80',
-              paddingTop: '8px',
-              borderTop: '1px solid var(--border-subtle)',
-              cursor: 'pointer'
-            }}
+            className="mobile-dropdown-wa"
           >
             <MessageCircle size={16} />
             <span>Chat on WhatsApp (+91 76959 24602)</span>
           </a>
         </div>
       )}
-
-      <style jsx>{`
-        @media (min-width: 860px) {
-          .desktop-nav {
-            display: flex !important;
-          }
-          .mobile-menu-btn {
-            display: none !important;
-          }
-        }
-        @media (max-width: 640px) {
-          .hide-mobile {
-            display: none;
-          }
-        }
-      `}</style>
     </header>
   );
 }

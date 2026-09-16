@@ -1,0 +1,413 @@
+'use client';
+
+import { useState } from 'react';
+import { useCart } from '../context/CartContext';
+
+export default function CartDrawer() {
+  const {
+    items,
+    isCartOpen,
+    setIsCartOpen,
+    updateQuantity,
+    removeItem,
+    clearCart,
+    subtotal,
+    shipping,
+    grandTotal,
+    isFreeShipping,
+    amountToFreeShipping,
+    freeShippingProgress,
+    setActiveUpiOrder
+  } = useCart();
+
+  const [customer, setCustomer] = useState({
+    name: '',
+    phone: '',
+    address: '',
+    city: '',
+    pincode: '',
+    note: ''
+  });
+
+  const [showAddressForm, setShowAddressForm] = useState(false);
+
+  if (!isCartOpen) return null;
+
+  // Build structured WhatsApp order message
+  const buildWhatsAppMessage = () => {
+    const orderId = `CC-${Math.floor(100000 + Math.random() * 900000)}`;
+    let text = `👑 *NEW CROWN & CROSS ORDER* — #${orderId}\n`;
+    text += `━━━━━━━━━━━━━━━━━━━━━\n`;
+    items.forEach((item, index) => {
+      text += `${index + 1}. *${item.name}*\n`;
+      text += `   • Quality: ${item.subCategory}\n`;
+      text += `   • Size: ${item.size} | Qty: ${item.quantity}\n`;
+      text += `   • Price: ₹${item.price * item.quantity}\n\n`;
+    });
+    text += `━━━━━━━━━━━━━━━━━━━━━\n`;
+    text += `Subtotal: ₹${subtotal}\n`;
+    text += `Shipping: ${isFreeShipping ? 'FREE (Special Offer)' : `₹${shipping}`}\n`;
+    text += `*GRAND TOTAL: ₹${grandTotal}*\n\n`;
+    text += `👤 *Customer Details:*\n`;
+    text += `Name: ${customer.name || 'Not specified'}\n`;
+    text += `Phone: ${customer.phone || 'Not specified'}\n`;
+    text += `Address: ${customer.address || 'Pending'}\n`;
+    text += `City / Pincode: ${customer.city || ''} ${customer.pincode || ''}\n`;
+    if (customer.note) text += `Note: ${customer.note}\n`;
+    text += `\nPlease confirm availability and payment verification!`;
+
+    return `https://wa.me/917695924602?text=${encodeURIComponent(text)}`;
+  };
+
+  const handleOpenUpi = () => {
+    const orderId = `CC-${Math.floor(100000 + Math.random() * 900000)}`;
+    setActiveUpiOrder({
+      orderId,
+      amount: grandTotal,
+      items,
+      customer
+    });
+    setIsCartOpen(false);
+  };
+
+  return (
+    <div
+      style={{
+        position: 'fixed',
+        inset: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.75)',
+        backdropFilter: 'blur(6px)',
+        zIndex: 90,
+        display: 'flex',
+        justifyContent: 'flex-end'
+      }}
+      onClick={() => setIsCartOpen(false)}
+    >
+      <div
+        className="animate-slide-in"
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          width: '100%',
+          maxWidth: '460px',
+          height: '100%',
+          backgroundColor: 'var(--bg-surface)',
+          borderLeft: '1px solid var(--border-subtle)',
+          display: 'flex',
+          flexDirection: 'column',
+          boxShadow: '-10px 0 35px rgba(0,0,0,0.6)'
+        }}
+      >
+        {/* Drawer Header */}
+        <div
+          style={{
+            padding: '20px 24px',
+            borderBottom: '1px solid var(--border-subtle)',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center'
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span style={{ fontSize: '20px' }}>🛒</span>
+            <h2 className="serif-heading" style={{ fontSize: '20px', fontWeight: 700, color: 'var(--gold-primary)' }}>
+              Your Jersey Cart
+            </h2>
+          </div>
+          <button
+            onClick={() => setIsCartOpen(false)}
+            style={{
+              background: 'none',
+              border: 'none',
+              color: 'var(--text-muted)',
+              fontSize: '22px',
+              cursor: 'pointer'
+            }}
+          >
+            ✕
+          </button>
+        </div>
+
+        {/* Free Shipping Progress Meter */}
+        <div
+          style={{
+            backgroundColor: 'var(--bg-elevated)',
+            borderBottom: '1px solid var(--border-subtle)',
+            padding: '14px 24px'
+          }}
+        >
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '8px' }}>
+            <span style={{ color: 'var(--text-secondary)' }}>
+              {isFreeShipping ? (
+                <strong style={{ color: '#4ade80' }}>🎉 You have unlocked FREE Pan-India Shipping!</strong>
+              ) : (
+                <>Add <strong style={{ color: 'var(--gold-primary)' }}>₹{amountToFreeShipping}</strong> more for FREE Shipping!</>
+              )}
+            </span>
+            <span style={{ fontWeight: 700, color: 'var(--gold-light)' }}>{freeShippingProgress}%</span>
+          </div>
+
+          <div
+            style={{
+              width: '100%',
+              height: '6px',
+              backgroundColor: 'var(--bg-primary)',
+              borderRadius: '999px',
+              overflow: 'hidden'
+            }}
+          >
+            <div
+              style={{
+                width: `${freeShippingProgress}%`,
+                height: '100%',
+                backgroundColor: isFreeShipping ? '#22c55e' : 'var(--gold-primary)',
+                transition: 'width 0.3s ease'
+              }}
+            />
+          </div>
+        </div>
+
+        {/* Cart Item List */}
+        <div style={{ flex: 1, overflowY: 'auto', padding: '20px 24px' }}>
+          {items.length === 0 ? (
+            <div style={{ textAlign: 'center', padding: '60px 0', color: 'var(--text-secondary)' }}>
+              <div style={{ fontSize: '48px', marginBottom: '12px' }}>⚽</div>
+              <h3 style={{ fontSize: '18px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '8px' }}>
+                Your cart is empty
+              </h3>
+              <p style={{ fontSize: '13px', color: 'var(--text-muted)' }}>
+                Explore our Club, Country, and Retro jersey collections to wear your story.
+              </p>
+            </div>
+          ) : (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              {items.map((item) => (
+                <div
+                  key={item.key}
+                  style={{
+                    display: 'flex',
+                    gap: '14px',
+                    paddingBottom: '16px',
+                    borderBottom: '1px solid var(--border-subtle)'
+                  }}
+                >
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    style={{
+                      width: '64px',
+                      height: '64px',
+                      borderRadius: '10px',
+                      objectFit: 'cover',
+                      border: '1px solid var(--border-subtle)',
+                      backgroundColor: 'var(--bg-elevated)',
+                      flexShrink: 0
+                    }}
+                  />
+                  <div style={{ flex: 1 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                      <h4 style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.3 }}>
+                        {item.name}
+                      </h4>
+                      <button
+                        onClick={() => removeItem(item.key)}
+                        style={{
+                          background: 'none',
+                          border: 'none',
+                          color: 'var(--text-muted)',
+                          fontSize: '14px',
+                          cursor: 'pointer',
+                          padding: '0 4px'
+                        }}
+                      >
+                        ✕
+                      </button>
+                    </div>
+
+                    <div style={{ fontSize: '11px', color: 'var(--text-secondary)', marginTop: '3px' }}>
+                      Size: <strong>{item.size}</strong> • {item.subCategory}
+                    </div>
+
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '10px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'var(--bg-primary)', padding: '2px 8px', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
+                        <button
+                          onClick={() => updateQuantity(item.key, -1)}
+                          style={{ background: 'none', border: 'none', color: 'var(--gold-primary)', cursor: 'pointer', fontSize: '14px', fontWeight: 700 }}
+                        >
+                          -
+                        </button>
+                        <span style={{ fontSize: '12px', fontWeight: 700 }}>{item.quantity}</span>
+                        <button
+                          onClick={() => updateQuantity(item.key, 1)}
+                          style={{ background: 'none', border: 'none', color: 'var(--gold-primary)', cursor: 'pointer', fontSize: '14px', fontWeight: 700 }}
+                        >
+                          +
+                        </button>
+                      </div>
+
+                      <div style={{ fontWeight: 800, color: 'var(--text-primary)', fontSize: '14px' }}>
+                        ₹{item.price * item.quantity}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+
+              {/* Customer Delivery Details Toggle */}
+              <div style={{ marginTop: '10px' }}>
+                <button
+                  type="button"
+                  onClick={() => setShowAddressForm(!showAddressForm)}
+                  style={{
+                    width: '100%',
+                    padding: '10px 14px',
+                    backgroundColor: 'var(--bg-elevated)',
+                    border: '1px solid var(--border-subtle)',
+                    borderRadius: '10px',
+                    color: 'var(--gold-primary)',
+                    fontSize: '12px',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
+                  }}
+                >
+                  <span>📍 {customer.address ? 'Edit Delivery Address' : '+ Add Delivery Address (Optional)'}</span>
+                  <span>{showAddressForm ? '▲' : '▼'}</span>
+                </button>
+
+                {showAddressForm && (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '12px', padding: '14px', backgroundColor: 'var(--bg-primary)', borderRadius: '12px', border: '1px solid var(--border-subtle)' }}>
+                    <input
+                      type="text"
+                      placeholder="Your Full Name"
+                      value={customer.name}
+                      onChange={(e) => setCustomer({ ...customer, name: e.target.value })}
+                      style={{ padding: '8px 10px', borderRadius: '8px', backgroundColor: 'var(--bg-surface)', border: '1px solid var(--border-subtle)', color: 'var(--text-primary)', fontSize: '12px' }}
+                    />
+                    <input
+                      type="tel"
+                      placeholder="WhatsApp Phone Number"
+                      value={customer.phone}
+                      onChange={(e) => setCustomer({ ...customer, phone: e.target.value })}
+                      style={{ padding: '8px 10px', borderRadius: '8px', backgroundColor: 'var(--bg-surface)', border: '1px solid var(--border-subtle)', color: 'var(--text-primary)', fontSize: '12px' }}
+                    />
+                    <input
+                      type="text"
+                      placeholder="Street Address / Flat No."
+                      value={customer.address}
+                      onChange={(e) => setCustomer({ ...customer, address: e.target.value })}
+                      style={{ padding: '8px 10px', borderRadius: '8px', backgroundColor: 'var(--bg-surface)', border: '1px solid var(--border-subtle)', color: 'var(--text-primary)', fontSize: '12px' }}
+                    />
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+                      <input
+                        type="text"
+                        placeholder="City"
+                        value={customer.city}
+                        onChange={(e) => setCustomer({ ...customer, city: e.target.value })}
+                        style={{ padding: '8px 10px', borderRadius: '8px', backgroundColor: 'var(--bg-surface)', border: '1px solid var(--border-subtle)', color: 'var(--text-primary)', fontSize: '12px' }}
+                      />
+                      <input
+                        type="text"
+                        placeholder="Pincode"
+                        value={customer.pincode}
+                        onChange={(e) => setCustomer({ ...customer, pincode: e.target.value })}
+                        style={{ padding: '8px 10px', borderRadius: '8px', backgroundColor: 'var(--bg-surface)', border: '1px solid var(--border-subtle)', color: 'var(--text-primary)', fontSize: '12px' }}
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Drawer Footer & Checkout Actions */}
+        {items.length > 0 && (
+          <div
+            style={{
+              padding: '20px 24px',
+              borderTop: '1px solid var(--border-subtle)',
+              backgroundColor: 'var(--bg-surface)'
+            }}
+          >
+            {/* Price Calculations */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '16px', fontSize: '13px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-secondary)' }}>
+                <span>Subtotal</span>
+                <span>₹{subtotal}</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-secondary)' }}>
+                <span>Pan-India Shipping</span>
+                <span>{isFreeShipping ? <strong style={{ color: '#4ade80' }}>FREE</strong> : `₹${shipping}`}</span>
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  fontSize: '16px',
+                  fontWeight: 800,
+                  color: 'var(--text-primary)',
+                  paddingTop: '8px',
+                  borderTop: '1px solid var(--border-subtle)'
+                }}
+              >
+                <span>Grand Total</span>
+                <span style={{ color: 'var(--gold-primary)' }}>₹{grandTotal}</span>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              {/* Option 1: WhatsApp Checkout */}
+              <a
+                href={buildWhatsAppMessage()}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  padding: '13px',
+                  borderRadius: '12px',
+                  backgroundColor: '#22c55e',
+                  color: '#0d140f',
+                  fontWeight: 800,
+                  fontSize: '14px',
+                  textDecoration: 'none',
+                  boxShadow: '0 4px 16px rgba(34, 197, 94, 0.25)'
+                }}
+              >
+                <span>💬</span> Order via WhatsApp Direct
+              </a>
+
+              {/* Option 2: Pay via UPI QR Modal */}
+              <button
+                type="button"
+                onClick={handleOpenUpi}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  padding: '13px',
+                  borderRadius: '12px',
+                  backgroundColor: 'var(--gold-primary)',
+                  color: '#0d140f',
+                  border: 'none',
+                  fontWeight: 800,
+                  fontSize: '14px',
+                  cursor: 'pointer',
+                  boxShadow: '0 4px 16px rgba(200, 169, 106, 0.25)'
+                }}
+              >
+                <span>⚡</span> Pay via UPI QR (Auto-Generated)
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

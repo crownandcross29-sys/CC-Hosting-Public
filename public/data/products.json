@@ -1,0 +1,164 @@
+{
+  "brand": {
+    "name": "Crown & Cross",
+    "tagline": "Some wear fashion. We wear football.",
+    "subTagline": "Wear Your Club. Wear Your Story.",
+    "phone": "+917695924602",
+    "email": "crownandcross29@gmail.com",
+    "location": "Chennai, Tamil Nadu",
+    "upiId": "jasonclement.jm-1@okhdfcbank",
+    "payeeName": "Jason Clement",
+    "currency": "INR",
+    "currencySymbol": "₹",
+    "shipping": {
+      "standardFee": 80,
+      "freeShippingThreshold": 1499,
+      "metroDeliveryDays": "3-5 Business Days",
+      "restOfIndiaDeliveryDays": "5-8 Business Days"
+    },
+    "exchange": {
+      "windowDays": "5-7 Days",
+      "conditions": "Tags intact, unworn, unwashed, non-customized"
+    }
+  },
+  "categories": [
+    { "id": "club", "name": "Club", "slug": "club" },
+    { "id": "country", "name": "Country", "slug": "country" },
+    { "id": "retro", "name": "Retro", "slug": "retro" }
+  ],
+  "subCategories": [
+    { "id": "player-version", "name": "Player Version", "description": "Authentic on-pitch slim fit with heat-applied badges and micro-breathable tech." },
+    { "id": "master-copy", "name": "Master Copy", "description": "High-grade 1:1 master reproduction matching original player specs." },
+    { "id": "fan-version-set", "name": "Fan Version Set", "description": "Comfortable relaxed regular fit with woven embroidered crest and durability." },
+    { "id": "embroidered", "name": "Embroidered", "description": "Classic premium stitched badges, durable heavy-weight poly blend." },
+    { "id": "sublimation", "name": "Sublimation", "description": "Full color-infused all-over graphic print, lightweight and ultra-soft." }
+  ],
+  "products": [
+    {
+      "id": "cc-001",
+      "slug": "real-madrid-23-24-home-bellingham",
+      "name": "Real Madrid 23/24 Home Kit — Bellingham #5",
+      "category": "Club",
+      "subCategory": "Player Version",
+      "team": "Real Madrid",
+      "season": "2023/24",
+      "price": 1499,
+      "mrp": 2499,
+      "inStock": true,
+      "stockStatus": "In Stock",
+      "stockQuantity": 24,
+      "sizes": ["S", "M", "L", "XL", "XXL"],
+      "images": [
+        "https://images.unsplash.com/photo-1517466787929-bc90951d0974?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1577223625816-7546f13df25d?auto=format&fit=crop&w=800&q=80"
+      ],
+      "featured": true,
+      "isBestSeller": true,
+      "description": "The regal pure white jersey accented by gold and navy trims celebrating Real Madrid's European dominance. Authentic Player Version with heat-sealed crest and breathable micro-mesh side vents."
+    },
+    {
+      "id": "cc-002",
+      "slug": "argentina-1986-maradona-retro",
+      "name": "Argentina 1986 World Cup Retro — Maradona #10",
+      "category": "Retro",
+      "subCategory": "Master Copy",
+      "team": "Argentina",
+      "season": "1986",
+      "price": 1699,
+      "mrp": 2799,
+      "inStock": true,
+      "stockStatus": "In Stock",
+      "stockQuantity": 15,
+      "sizes": ["M", "L", "XL"],
+      "images": [
+        "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=800&q=80"
+      ],
+      "featured": true,
+      "isRetro": true,
+      "description": "The immortal Albiceleste sky blue and white striped kit worn by Diego Armando Maradona during the triumph of Mexico '86. Premium fabric with authentic retro AFA crest."
+    },
+    {
+      "id": "cc-003",
+      "slug": "arsenal-2003-04-invincibles-henry",
+      "name": "Arsenal 2003/04 Invincibles Retro — Henry #14",
+      "category": "Retro",
+      "subCategory": "Embroidered",
+      "team": "Arsenal",
+      "season": "2003/04",
+      "price": 1599,
+      "mrp": 2699,
+      "inStock": true,
+      "stockStatus": "In Stock",
+      "stockQuantity": 18,
+      "sizes": ["S", "M", "L", "XL"],
+      "images": [
+        "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=800&q=80"
+      ],
+      "featured": true,
+      "isRetro": true,
+      "description": "Historic Highbury red with clean white sleeves from Arsenal's unbeaten 49-game season. Classic stitched O2 chest sponsor and embroidered retro cannon badge."
+    },
+    {
+      "id": "cc-004",
+      "slug": "japan-2022-special-edition-anime",
+      "name": "Japan 2022 Special Edition Origami Kit",
+      "category": "Country",
+      "subCategory": "Sublimation",
+      "team": "Japan",
+      "season": "2022",
+      "price": 1399,
+      "mrp": 2199,
+      "inStock": true,
+      "stockStatus": "In Stock",
+      "stockQuantity": 30,
+      "sizes": ["S", "M", "L", "XL", "XXL"],
+      "images": [
+        "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?auto=format&fit=crop&w=800&q=80"
+      ],
+      "featured": false,
+      "description": "Stunning glitched origami crow graphic inspired by manga and traditional Japanese paper craft. Crisp sublimation dye print that will never fade or peel."
+    },
+    {
+      "id": "cc-005",
+      "slug": "manchester-united-1999-treble-beckham",
+      "name": "Manchester United 1998/99 Treble Retro — Beckham #7",
+      "category": "Retro",
+      "subCategory": "Fan Version Set",
+      "team": "Manchester United",
+      "season": "1998/99",
+      "price": 1649,
+      "mrp": 2899,
+      "inStock": true,
+      "stockStatus": "In Stock",
+      "stockQuantity": 12,
+      "sizes": ["M", "L", "XL"],
+      "images": [
+        "https://images.unsplash.com/photo-1551958219-acbc608c6377?auto=format&fit=crop&w=800&q=80"
+      ],
+      "featured": true,
+      "isRetro": true,
+      "description": "The legendary Camp Nou Champions League final kit. Zip collar with Umbro diamond taping along sleeves and iconic Sharp sponsorship."
+    },
+    {
+      "id": "cc-006",
+      "slug": "brazil-2002-world-cup-ronaldo",
+      "name": "Brazil 2002 World Cup Retro — Ronaldo #9",
+      "category": "Country",
+      "subCategory": "Master Copy",
+      "team": "Brazil",
+      "season": "2002",
+      "price": 1599,
+      "mrp": 2599,
+      "inStock": true,
+      "stockStatus": "In Stock",
+      "stockQuantity": 20,
+      "sizes": ["S", "M", "L", "XL"],
+      "images": [
+        "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80"
+      ],
+      "featured": false,
+      "description": "The historic 5th star winning Canary Yellow kit worn by R9 Ronaldo in Yokohama. Authentic double-layer mesh construction with vibrant green detailing."
+    }
+  ]
+}

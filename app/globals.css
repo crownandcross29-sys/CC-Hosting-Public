@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Bebas+Neue&display=swap');
+
+:root {
+  --bg-primary: #0d140f;
+  --bg-surface: #131e17;
+  --bg-elevated: #19271e;
+  --bg-card: #15221a;
+  --border-subtle: #233428;
+  --border-active: #3b5442;
+  --gold-primary: #c8a96a;
+  --gold-hover: #dfc185;
+  --gold-light: #f4e8cb;
+  --gold-glow: rgba(200, 169, 106, 0.22);
+  --olive-deep: #0a0f0c;
+  --olive-accent: #273b2d;
+  --olive-bright: #3f5e49;
+  --text-primary: #f2f6f3;
+  --text-secondary: #a4b6a9;
+  --text-muted: #6f8374;
+  --status-instock: #22c55e;
+  --status-low: #eab308;
+  --status-out: #ef4444;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+  --shadow-gold: 0 10px 30px -5px rgba(200, 169, 106, 0.2);
+  --shadow-card: 0 12px 36px rgba(0, 0, 0, 0.45);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Luxury Typography */
+.serif-heading {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.sports-badge {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.05em;
+}
+
+.gold-gradient-text {
+  background: linear-gradient(135deg, #f7ebd0 0%, #c8a96a 50%, #9b7938 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gold-border-glow {
+  border: 1px solid var(--gold-primary);
+  box-shadow: 0 0 15px var(--gold-glow);
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-subtle);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-primary);
+}
+
+/* Micro-animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+.animate-slide-in {
+  animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Custom Link Underline hover */
+a {
+  color: inherit;
+  text-decoration: none;
+}

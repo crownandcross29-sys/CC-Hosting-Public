@@ -142,7 +142,7 @@ RESEND_FROM_EMAIL=Crown & Cross <onboarding@resend.dev>
 ---
 
 ## 📞 Support & Inquiries
-- **WhatsApp:** [+91 76959 24602](https://api.whatsapp.com/send?phone=917695924602)
+- **WhatsApp:** [+91 76959 24602](https://wa.me/917695924602)
 - **Email:** crownandcross29@gmail.com
 - **Base:** Chennai, Tamil Nadu, India
 - **Owner:** Jason Clement

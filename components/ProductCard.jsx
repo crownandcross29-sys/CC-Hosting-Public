@@ -34,9 +34,9 @@ export default function ProductCard({ product }) {
             left: '12px',
             backgroundColor: '#ef4444',
             color: '#fff',
-            fontSize: '10px',
+            fontSize: '11.5px',
             fontWeight: 800,
-            padding: '4px 8px',
+            padding: '4px 9px',
             borderRadius: '999px',
             zIndex: 2,
             letterSpacing: '0.04em'
@@ -53,12 +53,12 @@ export default function ProductCard({ product }) {
             position: 'absolute',
             top: '12px',
             right: '12px',
-            backgroundColor: 'rgba(13, 20, 15, 0.85)',
+            backgroundColor: 'rgba(13, 20, 15, 0.9)',
             border: '1px solid var(--gold-primary)',
             color: 'var(--gold-primary)',
-            fontSize: '10px',
+            fontSize: '11.5px',
             fontWeight: 800,
-            padding: '4px 8px',
+            padding: '4px 9px',
             borderRadius: '999px',
             zIndex: 2,
             display: 'inline-flex',
@@ -66,7 +66,7 @@ export default function ProductCard({ product }) {
             gap: '4px'
           }}
         >
-          <Sparkles size={11} /> FEATURED
+          <Sparkles size={12} /> FEATURED
         </span>
       )}
 
@@ -101,19 +101,20 @@ export default function ProductCard({ product }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', flexWrap: 'wrap' }}>
           <span
             style={{
-              fontSize: '10px',
+              fontSize: '11.5px',
               fontWeight: 800,
               textTransform: 'uppercase',
               letterSpacing: '0.06em',
               color: 'var(--gold-primary)',
-              backgroundColor: 'rgba(200, 169, 106, 0.1)',
-              padding: '2px 8px',
+              backgroundColor: 'rgba(200, 169, 106, 0.12)',
+              border: '1px solid rgba(200, 169, 106, 0.25)',
+              padding: '3px 9px',
               borderRadius: '999px'
             }}
           >
             {product.category}
           </span>
-          <span style={{ fontSize: '11px', color: 'var(--text-secondary)', fontWeight: 600 }}>
+          <span style={{ fontSize: '12.5px', color: 'var(--text-secondary)', fontWeight: 600 }}>
             {product.subCategory}
           </span>
         </div>
@@ -122,12 +123,12 @@ export default function ProductCard({ product }) {
         <Link href={`/product/${product.id}`} style={{ textDecoration: 'none' }}>
           <h3
             style={{
-              fontSize: '14px',
+              fontSize: '14.5px',
               fontWeight: 700,
               color: 'var(--text-primary)',
               lineHeight: 1.35,
               marginBottom: '6px',
-              height: '38px',
+              height: '40px',
               overflow: 'hidden',
               display: '-webkit-box',
               WebkitLineClamp: 2,
@@ -139,7 +140,7 @@ export default function ProductCard({ product }) {
         </Link>
 
         {/* Team & Season */}
-        <p style={{ fontSize: '12px', color: 'var(--text-muted)', marginBottom: '14px' }}>
+        <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '14px', fontWeight: 500 }}>
           {product.team} • {product.season}
         </p>
 
@@ -147,11 +148,11 @@ export default function ProductCard({ product }) {
         <div style={{ marginTop: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px' }}>
-              <span style={{ fontSize: '18px', fontWeight: 800, color: 'var(--text-primary)' }}>
+              <span style={{ fontSize: '19px', fontWeight: 800, color: 'var(--text-primary)' }}>
                 ₹{product.price}
               </span>
               {product.mrp && product.mrp > product.price && (
-                <span style={{ fontSize: '12px', color: 'var(--text-muted)', textDecoration: 'line-through' }}>
+                <span style={{ fontSize: '13px', color: 'var(--text-muted)', textDecoration: 'line-through' }}>
                   ₹{product.mrp}
                 </span>
               )}
@@ -166,7 +167,7 @@ export default function ProductCard({ product }) {
               backgroundColor: 'var(--gold-primary)',
               color: '#0d140f',
               border: 'none',
-              fontSize: '12px',
+              fontSize: '13px',
               fontWeight: 800,
               cursor: 'pointer',
               display: 'inline-flex',
@@ -175,7 +176,7 @@ export default function ProductCard({ product }) {
               whiteSpace: 'nowrap'
             }}
           >
-            <Plus size={13} strokeWidth={3} />
+            <Plus size={14} strokeWidth={3} />
             <span>Add</span>
           </button>
         </div>

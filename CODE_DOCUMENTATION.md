@@ -77,7 +77,7 @@ Built to satisfy the exact requirement: **Swipe, Click Arrow, Count Dots**.
 Instead of legacy redirect links that drop text parameters, the storefront routes all WhatsApp actions through a specialized launcher:
 - **Direct Protocol Scheme (`whatsapp://send?phone=...&text=...`):** Immediately invokes the registered WhatsApp application on Windows, macOS, Android, and iOS (iPhone/iPad).
 - **Text Sanitization (`sanitizeWhatsAppText`):** Converts non-standard box-drawing characters (`━`, `─`, `═`) into standard hyphens (`-`), ensuring URL query strings are never truncated or corrupted by carrier webviews.
-- **Universal Web Fallback (`api.whatsapp.com/send`):** Automatically directs to WhatsApp Web if a desktop client is not detected within 1.4s, guaranteeing zero lost orders.
+- **Universal Web Fallback (`wa.me`):** Automatically routes through Meta's universal click-to-chat bridge to guarantee zero lost orders.
 
 Structured message payloads include:
 - Unique Order ID (`CC-XXXXXX`)
@@ -88,7 +88,7 @@ Structured message payloads include:
 ### Dynamic Client-Side UPI QR (`components/UpiModal.jsx`)
 Encodes a standard NPCI UPI URI:
 ```
-upi://pay?pa=jasonclement.jm-1@okhdfcbank&pn=Jason%20Clement&am={grandTotal}&tn=Order%20{orderId}&cu=INR
+upi://pay?pa=jasonclement.jm-1@okhdfcbank&pn=Jason%20Clement&am={grandTotal}&tn=Order%20{orderId}&tr={refId}&mode=02&cu=INR
 ```
 The `qrcode` package converts this URI to a high-resolution base64 PNG data URL in the user's browser, allowing payment through Google Pay, PhonePe, Paytm, or BHIM without any backend server. Includes 1-click WhatsApp screenshot dispatch.
 
@@ -127,7 +127,7 @@ Powered by the official **Resend** SDK (`resend`).
 ### Email Layout & Styling:
 Generates an inline-styled, dark-mode luxury HTML email containing:
 - Crown & Cross gold header emblem.
-- Structured specification table with clickable `api.whatsapp.com` customer response link.
+- Structured specification table with clickable `wa.me` customer response link.
 - Automated `replyTo` header pointing directly to the customer's submitted email.
 
 ### Vercel Production Environment Setup:

@@ -5,8 +5,8 @@
   --bg-surface: #131e17;
   --bg-elevated: #19271e;
   --bg-card: #15221a;
-  --border-subtle: #233428;
-  --border-active: #3b5442;
+  --border-subtle: #2e4334;
+  --border-active: #476650;
   --gold-primary: #c8a96a;
   --gold-hover: #dfc185;
   --gold-light: #f4e8cb;
@@ -14,9 +14,9 @@
   --olive-deep: #0a0f0c;
   --olive-accent: #273b2d;
   --olive-bright: #3f5e49;
-  --text-primary: #f2f6f3;
-  --text-secondary: #a4b6a9;
-  --text-muted: #6f8374;
+  --text-primary: #f8faf9;
+  --text-secondary: #d5e2d9;
+  --text-muted: #b0c4b6;
   --status-instock: #22c55e;
   --status-low: #eab308;
   --status-out: #ef4444;
@@ -562,14 +562,15 @@ input:focus, select:focus, textarea:focus {
 }
 
 .trust-title {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
   color: var(--text-primary);
 }
 
 .trust-sub {
-  font-size: 12px;
-  color: var(--text-muted);
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 500;
 }
 
 .footer-grid {
@@ -592,34 +593,34 @@ input:focus, select:focus, textarea:focus {
 }
 
 .footer-logo {
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
   border: 1px solid var(--gold-primary);
   object-fit: cover;
 }
 
 .footer-brand-title {
-  font-size: 20px;
+  font-size: 21px;
   font-weight: 800;
   color: var(--gold-primary);
 }
 
 .brand-description {
-  font-size: 14px;
+  font-size: 14.5px;
   line-height: 1.6;
   color: var(--text-secondary);
   margin-bottom: 14px;
 }
 
 .brand-location {
-  font-size: 12px;
-  color: var(--text-muted);
+  font-size: 13px;
+  color: var(--text-secondary);
   margin-bottom: 12px;
 }
 
 .story-link {
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 600;
   display: inline-flex;
   align-items: center;
@@ -627,12 +628,12 @@ input:focus, select:focus, textarea:focus {
 }
 
 .story-arrow {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--gold-primary);
 }
 
 .col-heading {
-  font-size: 13px;
+  font-size: 13.5px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--gold-primary);
@@ -644,7 +645,7 @@ input:focus, select:focus, textarea:focus {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 11px;
   font-size: 14px;
   padding: 0;
   margin: 0;
@@ -668,15 +669,15 @@ input:focus, select:focus, textarea:focus {
 
 .footer-info-item {
   color: var(--text-secondary);
-  font-size: 13px;
+  font-size: 13.5px;
 }
 
 .delivery-item {
   color: var(--text-secondary);
-  font-size: 13px;
+  font-size: 13.5px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 5px;
 }
 
 .delivery-link {
@@ -689,7 +690,7 @@ input:focus, select:focus, textarea:focus {
 }
 
 .delivery-arrow {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--gold-primary);
 }
 
@@ -698,8 +699,9 @@ input:focus, select:focus, textarea:focus {
   padding-left: 18px;
   display: flex;
   flex-direction: column;
-  gap: 3px;
-  color: var(--text-muted);
+  gap: 4px;
+  color: var(--text-secondary);
+  font-size: 13.5px;
   margin: 0;
 }
 
@@ -723,7 +725,7 @@ input:focus, select:focus, textarea:focus {
 }
 
 .payments-title {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   color: var(--text-primary);
   letter-spacing: 0.04em;
@@ -731,8 +733,8 @@ input:focus, select:focus, textarea:focus {
 }
 
 .payments-sub {
-  font-size: 12px;
-  color: var(--text-muted);
+  font-size: 13px;
+  color: var(--text-secondary);
 }
 
 .payments-badges {
@@ -748,8 +750,8 @@ input:focus, select:focus, textarea:focus {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 12px;
-  color: var(--text-muted);
+  font-size: 13px;
+  color: var(--text-secondary);
   flex-wrap: wrap;
   gap: 16px;
 }

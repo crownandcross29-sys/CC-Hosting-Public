@@ -49,19 +49,19 @@ export default function CartDrawer() {
   // Build structured WhatsApp order message
   const buildWhatsAppText = () => {
     const orderId = `CC-${Math.floor(100000 + Math.random() * 900000)}`;
-    let text = `👑 *NEW CROWN & CROSS ORDER* — #${orderId}\n`;
+    let text = `*NEW CROWN & CROSS ORDER* - #${orderId}\n`;
     text += `-------------------------------------\n`;
     items.forEach((item, index) => {
       text += `${index + 1}. *${item.name}*\n`;
-      text += `   • Quality: ${item.subCategory}\n`;
-      text += `   • Size: ${item.size} | Qty: ${item.quantity}\n`;
-      text += `   • Price: ₹${item.price * item.quantity}\n\n`;
+      text += `   - Quality: ${item.subCategory}\n`;
+      text += `   - Size: ${item.size} | Qty: ${item.quantity}\n`;
+      text += `   - Price: ₹${item.price * item.quantity}\n\n`;
     });
     text += `-------------------------------------\n`;
     text += `Subtotal: ₹${subtotal}\n`;
     text += `Shipping: ${isFreeShipping ? 'FREE (Special Offer)' : `₹${shipping}`}\n`;
     text += `*GRAND TOTAL: ₹${grandTotal}*\n\n`;
-    text += `👤 *Customer Details:*\n`;
+    text += `*Customer Details:*\n`;
     text += `Name: ${customer.name || 'Not specified'}\n`;
     text += `Phone: ${customer.phone || 'Not specified'}\n`;
     text += `Address: ${customer.address || 'Pending'}\n`;

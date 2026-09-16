@@ -8,6 +8,7 @@ import { getWhatsAppUrl, triggerWhatsApp } from '../lib/whatsapp';
 export default function UpiModal({ orderDetails, onClose }) {
   const [qrDataUrl, setQrDataUrl] = useState('');
   const [copied, setCopied] = useState(false);
+  const [copiedOrder, setCopiedOrder] = useState(false);
 
   const {
     orderId = `CC-${Math.floor(100000 + Math.random() * 900000)}`,
@@ -19,11 +20,12 @@ export default function UpiModal({ orderDetails, onClose }) {
   const upiId = 'jasonclement.jm-1@okhdfcbank';
   const payeeName = 'Jason Clement';
   const note = `Order ${orderId}`;
+  const refId = String(orderId).replace(/[^a-zA-Z0-9]/g, '');
 
-  // UPI deep link
+  // UPI deep link with pre-filled transaction note (tn), reference ID (tr), and mode=02 (Dynamic QR)
   const upiUri = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(
     payeeName
-  )}&am=${amount}&tn=${encodeURIComponent(note)}&cu=INR`;
+  )}&am=${amount}&tn=${encodeURIComponent(note)}&tr=${encodeURIComponent(refId)}&mode=02&cu=INR`;
 
   useEffect(() => {
     QRCode.toDataURL(upiUri, {
@@ -44,8 +46,14 @@ export default function UpiModal({ orderDetails, onClose }) {
     setTimeout(() => setCopied(false), 2500);
   };
 
+  const handleCopyOrder = () => {
+    navigator.clipboard.writeText(orderId);
+    setCopiedOrder(true);
+    setTimeout(() => setCopiedOrder(false), 2500);
+  };
+
   const shareScreenshotText = `Hello Jason, I have completed the UPI payment of ₹${amount} for Order #${orderId}.\n\nItems:\n${items
-    .map((i) => `• ${i.name} (Size: ${i.size}) x${i.quantity}`)
+    .map((i) => `- ${i.name} (Size: ${i.size}) x${i.quantity}`)
     .join('\n')}\n\nCustomer: ${customer.name || 'Customer'}\nPhone: ${
     customer.phone || 'N/A'
   }\nAddress: ${customer.address || 'N/A'}, ${customer.city || ''} ${customer.pincode || ''}\n\nAttaching payment screenshot here!`;
@@ -108,6 +116,28 @@ export default function UpiModal({ orderDetails, onClose }) {
         <h3 className="serif-heading" style={{ fontSize: '22px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '4px' }}>
           Order #{orderId}
         </h3>
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '12px', color: 'var(--text-muted)', marginBottom: '8px' }}>
+          <span>Comment / Note pre-filled: <strong style={{ color: 'var(--gold-primary)' }}>Order {orderId}</strong></span>
+          <button
+            type="button"
+            onClick={handleCopyOrder}
+            style={{
+              background: 'transparent',
+              border: 'none',
+              color: copiedOrder ? '#4ade80' : 'var(--gold-primary)',
+              cursor: 'pointer',
+              display: 'inline-flex',
+              alignItems: 'center',
+              padding: '2px 4px',
+              gap: '4px',
+              fontSize: '11px',
+              fontWeight: 600
+            }}
+            title="Copy Order ID"
+          >
+            {copiedOrder ? <><Check size={12} /> Copied</> : <><Copy size={12} /> Copy</>}
+          </button>
+        </div>
         <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '18px' }}>
           Scan using any UPI App (GPay, PhonePe, Paytm, CRED, BHIM)
         </p>

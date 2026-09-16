@@ -26,6 +26,7 @@ Indian e-commerce is plagued by cumbersome authentication barriers. Our design p
 1. **No Account Required:** A fan can find a kit, select their size, and checkout in under 30 seconds.
 2. **WhatsApp as the Customer Relationship Layer:** Rather than faceless support ticket bots, customers communicate directly with founder Jason Clement via WhatsApp (`+91 76959 24602`). This builds authentic human trust and fosters long-term collector loyalty.
 3. **Transparent Pan-India Free Shipping Meter:** Cart drawer gamification encourages fans to reach the ₹1,499 free delivery threshold without deceptive hidden checkout fees.
+4. **Dual-Channel B2B Inquiries (Email + WhatsApp):** Bulk team and tournament organizers require formal recordkeeping. By integrating automated transactional email (via Resend) into `/request-estimate` alongside instant WhatsApp triggers, clients receive both formal email paper trails and personal, real-time WhatsApp responsiveness.
 
 ---
 

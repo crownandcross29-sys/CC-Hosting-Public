@@ -15,15 +15,65 @@ export default function RequestEstimatePage() {
     notes: ''
   });
 
+  const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [errorNotice, setErrorNotice] = useState(null);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const text = `👑 *CROWN & CROSS — BULK / TEAM ESTIMATE REQUEST*\n━━━━━━━━━━━━━━━━━━━━━\nName: ${formData.name}\nPhone: ${formData.phone}\nEmail: ${formData.email || 'N/A'}\nTeam/Club: ${formData.organization || 'Individual/Group'}\n\nKit Type: ${formData.kitType}\nQuality Tier: ${formData.qualityTier}\nEstimated Quantity: ${formData.quantity} kits\nCustom Names & Numbers: ${formData.customNames}\n\nAdditional Requirements:\n${formData.notes || 'None'}\n\nPlease provide a customized price quote and delivery timeline!`;
+  const buildWhatsAppText = () => {
+    return `👑 *CROWN & CROSS — BULK / TEAM ESTIMATE REQUEST*\n━━━━━━━━━━━━━━━━━━━━━\nName: ${formData.name}\nPhone: ${formData.phone}\nEmail: ${formData.email || 'N/A'}\nTeam/Club: ${formData.organization || 'Individual/Group'}\n\nKit Type: ${formData.kitType}\nQuality Tier: ${formData.qualityTier}\nEstimated Quantity: ${formData.quantity} kits\nCustom Names & Numbers: ${formData.customNames}\n\nAdditional Requirements:\n${formData.notes || 'None'}\n\nPlease provide a customized price quote and delivery timeline!`;
+  };
 
-    const waUrl = `https://wa.me/917695924602?text=${encodeURIComponent(text)}`;
+  const handleOpenWhatsAppDirect = () => {
+    const waUrl = `https://wa.me/917695924602?text=${encodeURIComponent(buildWhatsAppText())}`;
     window.open(waUrl, '_blank');
-    setSubmitted(true);
+  };
+
+  const handleOpenMailto = () => {
+    const subject = encodeURIComponent(`Crown & Cross — Estimate Request: ${formData.name}`);
+    const body = encodeURIComponent(buildWhatsAppText());
+    window.location.href = `mailto:crownandcross29@gmail.com?subject=${subject}&body=${body}`;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setErrorNotice(null);
+
+    try {
+      const res = await fetch('/api/estimate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        // If Resend API key is not yet configured or error
+        if (data.isConfigError) {
+          setErrorNotice({
+            type: 'config',
+            msg: 'The server email service is awaiting the RESEND_API_KEY. You can still send your request instantly via WhatsApp or Email client below:'
+          });
+        } else {
+          setErrorNotice({
+            type: 'general',
+            msg: data.error || 'Failed to dispatch email. Please use WhatsApp or Email client below.'
+          });
+        }
+        return;
+      }
+
+      setSubmitted(true);
+    } catch (err) {
+      console.error(err);
+      setErrorNotice({
+        type: 'network',
+        msg: 'Connection error while contacting email server. Please use WhatsApp or Email client below.'
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -42,31 +92,113 @@ export default function RequestEstimatePage() {
 
       <div style={{ backgroundColor: 'var(--bg-surface)', border: '1px solid var(--border-subtle)', borderRadius: '24px', padding: '36px', boxShadow: 'var(--shadow-card)' }}>
         {submitted ? (
-          <div style={{ textAlign: 'center', padding: '40px 0' }}>
-            <div style={{ fontSize: '48px', marginBottom: '16px' }}>🎉</div>
+          <div style={{ textAlign: 'center', padding: '30px 0' }}>
+            <div style={{ fontSize: '48px', marginBottom: '16px' }}>✉️</div>
             <h3 className="serif-heading" style={{ fontSize: '24px', color: 'var(--gold-primary)', marginBottom: '8px' }}>
-              Estimate Request Prepared!
+              Estimate Request Emailed Successfully!
             </h3>
-            <p style={{ fontSize: '14px', color: 'var(--text-secondary)', marginBottom: '24px' }}>
-              We have opened WhatsApp to connect you directly with Jason. If it didn't open automatically, message us directly at <strong>+91 76959 24602</strong>.
+            <p style={{ fontSize: '14px', color: 'var(--text-secondary)', maxWidth: '520px', margin: '0 auto 24px', lineHeight: 1.6 }}>
+              Your requirements have been sent to <strong>crownandcross29@gmail.com</strong>. Founder <strong>Jason Clement</strong> will review your specifications and reply with a custom quotation within 24 hours.
             </p>
-            <button
-              onClick={() => setSubmitted(false)}
-              style={{
-                padding: '10px 24px',
-                borderRadius: '999px',
-                backgroundColor: 'var(--gold-primary)',
-                color: '#0d140f',
-                fontWeight: 700,
-                cursor: 'pointer',
-                border: 'none'
-              }}
-            >
-              Submit Another Request
-            </button>
+
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '14px', flexWrap: 'wrap' }}>
+              <button
+                type="button"
+                onClick={handleOpenWhatsAppDirect}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '12px 24px',
+                  borderRadius: '999px',
+                  backgroundColor: '#22c55e',
+                  color: '#0d140f',
+                  fontWeight: 800,
+                  fontSize: '13px',
+                  cursor: 'pointer',
+                  border: 'none',
+                  boxShadow: '0 4px 14px rgba(34, 197, 94, 0.3)'
+                }}
+              >
+                <span>💬</span> Also Chat on WhatsApp
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setSubmitted(false);
+                  setErrorNotice(null);
+                }}
+                style={{
+                  padding: '12px 22px',
+                  borderRadius: '999px',
+                  backgroundColor: 'var(--bg-elevated)',
+                  border: '1px solid var(--border-subtle)',
+                  color: 'var(--text-primary)',
+                  fontWeight: 700,
+                  fontSize: '13px',
+                  cursor: 'pointer'
+                }}
+              >
+                Submit Another Request
+              </button>
+            </div>
           </div>
         ) : (
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            {/* Error Notification Banner if Resend Key is missing or failed */}
+            {errorNotice && (
+              <div
+                style={{
+                  backgroundColor: 'rgba(234, 179, 8, 0.1)',
+                  border: '1px solid rgba(234, 179, 8, 0.4)',
+                  borderRadius: '14px',
+                  padding: '16px 20px',
+                  fontSize: '13px',
+                  color: '#fef08a',
+                  lineHeight: 1.5
+                }}
+              >
+                <div style={{ fontWeight: 700, marginBottom: '6px' }}>
+                  ℹ️ {errorNotice.msg}
+                </div>
+                <div style={{ display: 'flex', gap: '10px', marginTop: '12px', flexWrap: 'wrap' }}>
+                  <button
+                    type="button"
+                    onClick={handleOpenWhatsAppDirect}
+                    style={{
+                      padding: '8px 16px',
+                      borderRadius: '8px',
+                      backgroundColor: '#22c55e',
+                      color: '#0d140f',
+                      fontWeight: 700,
+                      border: 'none',
+                      fontSize: '12px',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    💬 Send via WhatsApp
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleOpenMailto}
+                    style={{
+                      padding: '8px 16px',
+                      borderRadius: '8px',
+                      backgroundColor: 'var(--gold-primary)',
+                      color: '#0d140f',
+                      fontWeight: 700,
+                      border: 'none',
+                      fontSize: '12px',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    ✉️ Send via Mail App
+                  </button>
+                </div>
+              </div>
+            )}
+
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '16px' }}>
               <div>
                 <label style={{ display: 'block', fontSize: '12px', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '6px' }}>
@@ -100,6 +232,20 @@ export default function RequestEstimatePage() {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '16px' }}>
               <div>
                 <label style={{ display: 'block', fontSize: '12px', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '6px' }}>
+                  Customer Email (For Estimate Quotation) *
+                </label>
+                <input
+                  type="email"
+                  required
+                  placeholder="yourname@gmail.com"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  style={{ width: '100%', padding: '10px 14px', backgroundColor: 'var(--bg-primary)', border: '1px solid var(--border-subtle)', borderRadius: '10px', color: 'var(--text-primary)', fontSize: '13px' }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontSize: '12px', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '6px' }}>
                   Team / Club / Organization Name
                 </label>
                 <input
@@ -110,7 +256,9 @@ export default function RequestEstimatePage() {
                   style={{ width: '100%', padding: '10px 14px', backgroundColor: 'var(--bg-primary)', border: '1px solid var(--border-subtle)', borderRadius: '10px', color: 'var(--text-primary)', fontSize: '13px' }}
                 />
               </div>
+            </div>
 
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
               <div>
                 <label style={{ display: 'block', fontSize: '12px', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '6px' }}>
                   Estimated Quantity *
@@ -124,9 +272,7 @@ export default function RequestEstimatePage() {
                   style={{ width: '100%', padding: '10px 14px', backgroundColor: 'var(--bg-primary)', border: '1px solid var(--border-subtle)', borderRadius: '10px', color: 'var(--text-primary)', fontSize: '13px' }}
                 />
               </div>
-            </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '16px' }}>
               <div>
                 <label style={{ display: 'block', fontSize: '12px', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '6px' }}>
                   Preferred Kit Type
@@ -145,17 +291,18 @@ export default function RequestEstimatePage() {
 
               <div>
                 <label style={{ display: 'block', fontSize: '12px', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '6px' }}>
-                  Preferred Quality Tier
+                  Quality Standard
                 </label>
                 <select
                   value={formData.qualityTier}
                   onChange={(e) => setFormData({ ...formData, qualityTier: e.target.value })}
                   style={{ width: '100%', padding: '10px 14px', backgroundColor: 'var(--bg-primary)', border: '1px solid var(--border-subtle)', borderRadius: '10px', color: 'var(--text-primary)', fontSize: '13px' }}
                 >
-                  <option value="Player Version">Player Version (Slim athletic fit)</option>
+                  <option value="Player Version">Player Version (Slim fit)</option>
                   <option value="Master Copy">Master Copy (1:1 standard)</option>
-                  <option value="Fan Version Set">Fan Version Set (Durable embroidered)</option>
-                  <option value="Full Sublimation">Full Sublimation (Dye-infused)</option>
+                  <option value="Fan Version Set">Fan Version Set (Durable)</option>
+                  <option value="Embroidered">Embroidered</option>
+                  <option value="Sublimation">Sublimation</option>
                 </select>
               </div>
             </div>
@@ -182,36 +329,60 @@ export default function RequestEstimatePage() {
 
             <div>
               <label style={{ display: 'block', fontSize: '12px', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '6px' }}>
-                Specific Kit Details, Sizes, or Tournament Dates
+                Specific Kit Details, Sizes, or Tournament Deadlines
               </label>
               <textarea
                 rows="3"
-                placeholder="Mention specific clubs (e.g. 10x Arsenal Away), sizes breakdown (e.g. 4M, 4L, 2XL), tournament deadline..."
+                placeholder="Mention specific clubs (e.g. 12x Arsenal Away), sizes breakdown (e.g. 4M, 6L, 2XL), target tournament date..."
                 value={formData.notes}
                 onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                 style={{ width: '100%', padding: '10px 14px', backgroundColor: 'var(--bg-primary)', border: '1px solid var(--border-subtle)', borderRadius: '10px', color: 'var(--text-primary)', fontSize: '13px' }}
               />
             </div>
 
-            <button
-              type="submit"
-              style={{
-                marginTop: '10px',
-                padding: '14px',
-                borderRadius: '12px',
-                backgroundColor: 'var(--gold-primary)',
-                color: '#0d140f',
-                fontWeight: 800,
-                fontSize: '15px',
-                border: 'none',
-                cursor: 'pointer',
-                boxShadow: '0 4px 16px rgba(200, 169, 106, 0.3)',
-                textTransform: 'uppercase',
-                letterSpacing: '0.04em'
-              }}
-            >
-              Send Estimate Request via WhatsApp 💬
-            </button>
+            <div style={{ display: 'flex', gap: '12px', marginTop: '10px', flexWrap: 'wrap' }}>
+              <button
+                type="submit"
+                disabled={loading}
+                style={{
+                  flex: '1 1 240px',
+                  padding: '14px',
+                  borderRadius: '12px',
+                  backgroundColor: 'var(--gold-primary)',
+                  color: '#0d140f',
+                  fontWeight: 800,
+                  fontSize: '14px',
+                  border: 'none',
+                  cursor: loading ? 'not-allowed' : 'pointer',
+                  boxShadow: '0 4px 16px rgba(200, 169, 106, 0.3)',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.04em'
+                }}
+              >
+                {loading ? 'Sending Estimate Email...' : '✉️ Email Estimate Request'}
+              </button>
+
+              <button
+                type="button"
+                onClick={handleOpenWhatsAppDirect}
+                style={{
+                  flex: '1 1 200px',
+                  padding: '14px',
+                  borderRadius: '12px',
+                  backgroundColor: '#22c55e',
+                  color: '#0d140f',
+                  fontWeight: 800,
+                  fontSize: '14px',
+                  border: 'none',
+                  cursor: 'pointer',
+                  boxShadow: '0 4px 16px rgba(34, 197, 94, 0.25)',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.04em'
+                }}
+              >
+                💬 Send via WhatsApp
+              </button>
+            </div>
           </form>
         )}
       </div>

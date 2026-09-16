@@ -42,6 +42,41 @@ Every commit to `main` will trigger an automated redeployment with zero downtime
 
 ---
 
+### 🔑 Configuring the Resend API Key in Vercel (For Automated Estimates)
+
+The team/bulk jersey estimate request form (`/request-estimate`) sends email quotations to `crownandcross29@gmail.com` using the **Resend** transactional email API.
+
+Follow these steps to configure it in Vercel:
+
+#### Step 1: Obtain your Resend API Key
+1. Go to [https://resend.com](https://resend.com) and log in (or create a free account).
+2. Navigate to **API Keys** in the sidebar ([https://resend.com/api-keys](https://resend.com/api-keys)).
+3. Click **Create API Key**.
+4. Name: `Crown & Cross Storefront`.
+5. Permission: **Full Access** or **Sending Access**.
+6. Copy your generated key (starts with `re_...`).
+
+#### Step 2: Add to Vercel Environment Variables
+1. Go to your [Vercel Dashboard](https://vercel.com/dashboard) and select your **`CC-Hosting-Public`** project.
+2. Click **Settings** (top navigation tab) → **Environment Variables** (left sidebar).
+3. Add the following variable:
+   * **Key:** `RESEND_API_KEY`
+   * **Value:** `re_your_copied_key_here`
+   * **Target Environments:** Check all: **Production**, **Preview**, **Development**.
+4. Click **Save**.
+
+#### Step 3: (Optional) Custom Sender & Notification Address
+By default, the app uses Resend's sandbox (`onboarding@resend.dev`) and delivers notifications to `crownandcross29@gmail.com`. You can optionally add:
+* **`ESTIMATE_NOTIFICATION_EMAIL`**: Recipient inbox (e.g. `crownandcross29@gmail.com`).
+* **`RESEND_FROM_EMAIL`**: Custom verified sender (e.g. `Crown & Cross <orders@yourdomain.com>`) once your custom domain is verified in Resend.
+
+#### Step 4: Apply to Deployment
+> [!IMPORTANT]
+> In Vercel, new environment variables apply to **subsequent builds**.
+> After saving the variable, go to the **Deployments** tab, click **`...`** on the latest deployment, and click **Redeploy** (or push a new commit to `main`).
+
+---
+
 ## ✨ Features
 
 - **Hero & Heritage Showcase**: High-impact brand statement, football culture ethos, and quick action filters.
@@ -65,9 +100,26 @@ Every commit to `main` will trigger an automated redeployment with zero downtime
   - Shipping Policy (`/shipping-policy`) — 3–5 days metro, 5–8 days pan-India.
   - Returns & Exchange Policy (`/returns-policy`) — 5–7 days sizing exchange.
   - Terms of Service (`/terms`) & Privacy Policy (`/privacy`).
-  - Bulk & Team Estimate Request Form (`/request-estimate`).
+  - **Bulk & Team Estimate Request Form (`/request-estimate`)**: Automated email quotation dispatch powered by **Resend** to `crownandcross29@gmail.com` with instant WhatsApp fallback.
 
 ---
+
+## ⚙️ Environment Variables (Email Service)
+
+Create `.env.local` in `CC-Hosting-Public/` (copied from `.env.example`):
+
+```bash
+# Resend API Key (Obtain from https://resend.com/api-keys)
+RESEND_API_KEY=re_your_api_key_here
+
+# Recipient for estimate email alerts
+ESTIMATE_NOTIFICATION_EMAIL=crownandcross29@gmail.com
+
+# Verified sender address (Use onboarding@resend.dev during testing)
+RESEND_FROM_EMAIL=Crown & Cross <onboarding@resend.dev>
+```
+
+> **Note on Vercel:** Add `RESEND_API_KEY` to your Vercel Project Settings under **Environment Variables** for production email delivery.
 
 ## 🎨 Design Tokens (Olive Green & Gold)
 

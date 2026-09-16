@@ -85,3 +85,53 @@ Encodes a standard NPCI UPI URI:
 upi://pay?pa=jasonclement.jm-1@okhdfcbank&pn=Jason%20Clement&am={grandTotal}&tn=Order%20{orderId}&cu=INR
 ```
 The `qrcode` package converts this URI to a high-resolution base64 PNG data URL in the user's browser, allowing payment through Google Pay, PhonePe, Paytm, or BHIM without any backend server.
+
+---
+
+## 5. Automated Email Service: `/api/estimate`
+
+Powered by the official **Resend** SDK (`resend`).
+
+### Endpoint Specification:
+- **Method:** `POST`
+- **Route:** `/api/estimate`
+- **Headers:** `Content-Type: application/json`
+
+### Request Payload:
+```json
+{
+  "name": "Arun Kumar",
+  "phone": "+91 98765 43210",
+  "email": "arun@example.com",
+  "organization": "Marina FC",
+  "kitType": "Club Classic",
+  "qualityTier": "Player Version",
+  "quantity": 14,
+  "customNames": "Yes",
+  "notes": "Need customized name and numbers for tournament on Oct 15"
+}
+```
+
+### Response Codes:
+- `200 OK`: `{ success: true, id: "msg_xxx", message: "Estimate request emailed to crownandcross29@gmail.com successfully." }`
+- `400 Bad Request`: Missing mandatory fields (`name` or `phone`).
+- `503 Service Unavailable`: Triggered if `RESEND_API_KEY` is missing or set to placeholder; frontend gracefully exposes direct WhatsApp and `mailto:` buttons.
+- `502 Bad Gateway`: Upstream Resend API delivery rejection.
+
+### Email Layout & Styling:
+Generates an inline-styled, dark-mode luxury HTML email containing:
+- Crown & Cross gold header emblem.
+- Structured specification table with clickable `wa.me` customer response link.
+- Automated `replyTo` header pointing directly to the customer's submitted email.
+
+### Vercel Production Environment Setup:
+To enable live transactional emailing in production:
+1. Navigate to **Vercel Dashboard** → `CC-Hosting-Public` → **Settings** → **Environment Variables**.
+2. Add the following keys:
+   | Variable | Value | Required | Description |
+   |---|---|---|---|
+   | `RESEND_API_KEY` | `re_...` | **Yes** | Generated secret key from [resend.com/api-keys](https://resend.com/api-keys) |
+   | `ESTIMATE_NOTIFICATION_EMAIL` | `crownandcross29@gmail.com` | Optional | Inbox receiving team jersey requests (defaults to `crownandcross29@gmail.com`) |
+   | `RESEND_FROM_EMAIL` | `Crown & Cross <orders@yourdomain.com>` | Optional | Verified custom sender address in Resend (defaults to sandbox `onboarding@resend.dev`) |
+3. Trigger a **Redeploy** on Vercel to inject new environment variables into the serverless runtime.
+4. **Fallback Handling**: If `RESEND_API_KEY` is not provided or fails, the frontend dynamically presents fallback options: a direct pre-filled WhatsApp quotation chat and a pre-composed `mailto:` link.

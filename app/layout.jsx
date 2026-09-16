@@ -12,6 +12,11 @@ export const metadata = {
     title: 'Crown & Cross — Football Jerseys',
     description: 'Wear Your Club. Wear Your Story. Club, Country & Retro Football Kits.',
     images: ['/images/logo.jpeg']
+  },
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/images/logo.jpeg'
   }
 };
 

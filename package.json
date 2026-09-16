@@ -1,6 +1,6 @@
 {
   "name": "crown-and-cross-public",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "scripts": {
     "dev": "next dev -p 3001",
@@ -8,10 +8,11 @@
     "start": "next start -p 3001"
   },
   "dependencies": {
+    "lucide-react": "^0.453.0",
     "next": "^14.2.15",
+    "qrcode": "^1.5.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "lucide-react": "^0.453.0",
-    "qrcode": "^1.5.4"
+    "resend": "^6.28.1"
   }
 }

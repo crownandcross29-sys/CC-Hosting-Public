@@ -22,16 +22,48 @@
     }
   },
   "categories": [
-    { "id": "club", "name": "Club", "slug": "club" },
-    { "id": "country", "name": "Country", "slug": "country" },
-    { "id": "retro", "name": "Retro", "slug": "retro" }
+    {
+      "id": "club",
+      "name": "Club",
+      "slug": "club"
+    },
+    {
+      "id": "country",
+      "name": "Country",
+      "slug": "country"
+    },
+    {
+      "id": "retro",
+      "name": "Retro",
+      "slug": "retro"
+    }
   ],
   "subCategories": [
-    { "id": "player-version", "name": "Player Version", "description": "Authentic on-pitch slim fit with heat-applied badges and micro-breathable tech." },
-    { "id": "master-copy", "name": "Master Copy", "description": "High-grade 1:1 master reproduction matching original player specs." },
-    { "id": "fan-version-set", "name": "Fan Version Set", "description": "Comfortable relaxed regular fit with woven embroidered crest and durability." },
-    { "id": "embroidered", "name": "Embroidered", "description": "Classic premium stitched badges, durable heavy-weight poly blend." },
-    { "id": "sublimation", "name": "Sublimation", "description": "Full color-infused all-over graphic print, lightweight and ultra-soft." }
+    {
+      "id": "player-version",
+      "name": "Player Version",
+      "description": "Authentic on-pitch slim fit with heat-applied badges and micro-breathable tech."
+    },
+    {
+      "id": "master-copy",
+      "name": "Master Copy",
+      "description": "High-grade 1:1 master reproduction matching original player specs."
+    },
+    {
+      "id": "fan-version-set",
+      "name": "Fan Version Set",
+      "description": "Comfortable relaxed regular fit with woven embroidered crest and durability."
+    },
+    {
+      "id": "embroidered",
+      "name": "Embroidered",
+      "description": "Classic premium stitched badges, durable heavy-weight poly blend."
+    },
+    {
+      "id": "sublimation",
+      "name": "Sublimation",
+      "description": "Full color-infused all-over graphic print, lightweight and ultra-soft."
+    }
   ],
   "products": [
     {
@@ -47,7 +79,13 @@
       "inStock": true,
       "stockStatus": "In Stock",
       "stockQuantity": 24,
-      "sizes": ["S", "M", "L", "XL", "XXL"],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
       "images": [
         "https://images.unsplash.com/photo-1517466787929-bc90951d0974?auto=format&fit=crop&w=800&q=80",
         "https://images.unsplash.com/photo-1577223625816-7546f13df25d?auto=format&fit=crop&w=800&q=80"
@@ -69,7 +107,11 @@
       "inStock": true,
       "stockStatus": "In Stock",
       "stockQuantity": 15,
-      "sizes": ["M", "L", "XL"],
+      "sizes": [
+        "M",
+        "L",
+        "XL"
+      ],
       "images": [
         "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80",
         "https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=800&q=80"
@@ -91,7 +133,12 @@
       "inStock": true,
       "stockStatus": "In Stock",
       "stockQuantity": 18,
-      "sizes": ["S", "M", "L", "XL"],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
       "images": [
         "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=800&q=80"
       ],
@@ -112,7 +159,13 @@
       "inStock": true,
       "stockStatus": "In Stock",
       "stockQuantity": 30,
-      "sizes": ["S", "M", "L", "XL", "XXL"],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
       "images": [
         "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?auto=format&fit=crop&w=800&q=80"
       ],
@@ -132,7 +185,11 @@
       "inStock": true,
       "stockStatus": "In Stock",
       "stockQuantity": 12,
-      "sizes": ["M", "L", "XL"],
+      "sizes": [
+        "M",
+        "L",
+        "XL"
+      ],
       "images": [
         "https://images.unsplash.com/photo-1551958219-acbc608c6377?auto=format&fit=crop&w=800&q=80"
       ],
@@ -153,7 +210,12 @@
       "inStock": true,
       "stockStatus": "In Stock",
       "stockQuantity": 20,
-      "sizes": ["S", "M", "L", "XL"],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
       "images": [
         "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80"
       ],

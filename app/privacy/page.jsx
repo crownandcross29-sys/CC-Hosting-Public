@@ -1,3 +1,5 @@
+import { getWhatsAppUrl } from '../../lib/whatsapp';
+
 export const metadata = {
   title: 'Privacy Policy — Crown & Cross',
   description: 'How Crown & Cross protects your customer data.'
@@ -46,7 +48,22 @@ export default function PrivacyPage() {
             4. Contact
           </h2>
           <p>
-            For any data questions or privacy inquiries, contact <strong>crownandcross29@gmail.com</strong> or message <strong>+91 76959 24602</strong>.
+            For any data questions or privacy inquiries, contact{' '}
+            <a
+              href="mailto:crownandcross29@gmail.com?subject=Privacy%20Inquiry"
+              style={{ color: 'var(--gold-primary)', fontWeight: 700, textDecoration: 'underline' }}
+            >
+              crownandcross29@gmail.com
+            </a>{' '}
+            or message{' '}
+            <a
+              href={getWhatsAppUrl("Hello Crown & Cross, privacy inquiry")}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: '#4ade80', fontWeight: 700, textDecoration: 'underline' }}
+            >
+              +91 76959 24602
+            </a>.
           </p>
         </div>
       </div>

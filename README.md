@@ -92,12 +92,18 @@ By default, the app uses Resend's sandbox (`onboarding@resend.dev`) and delivers
   - **Free Shipping Progress Meter**: Real-time progress towards the ₹1,499 free shipping threshold (Standard fee ₹80).
   - Size and quantity adjustments with LocalStorage persistence.
 - **Dual Checkout System**:
-  - **1. WhatsApp Direct Order**: Automatically constructs a structured cart breakdown sent to `+91 76959 24602`.
-  - **2. Instant UPI QR Code Generator**: Generates client-side QR codes for payee **Jason Clement** (`jasonclement.jm-1@okhdfcbank`).
+  - **1. Universal WhatsApp Direct Order**: Deep links directly via `whatsapp://send` to the native WhatsApp application on Windows, macOS, Android, and iOS (iPhone/iPad) with pre-filled recipient (`+91 76959 24602`) and pre-typed order details. Automatic graceful fallback to WhatsApp Web if desktop client is not installed.
+  - **2. Instant UPI QR Code Generator**: Generates client-side dynamic QR codes for payee **Jason Clement** (`jasonclement.jm-1@okhdfcbank`).
+- **📱 Full Responsive Multi-Screen Compatibility**:
+  - **Large Screens (Desktop & 4K):** Proportional fluid typography (`clamp()`), max-width boundaries, and clean multi-column layouts.
+  - **Medium Screens (Tablets & Laptops):** 2–3 column adaptive grids and seamless navigation transitions.
+  - **Small Screens (Mobile Phones):** Fluid 1-column collapse (`minmax(min(100%, ...), 1fr)`), touch-swipe gesture carousel, full-width drawers, and viewport-bounded modals with zero horizontal scroll.
 - **Complete Trust & Policy Suite**:
   - Size & Fit Guide (`/size-guide`)
   - Our Story & Brand Ethos (`/about`)
-  - Shipping Policy (`/shipping-policy`) — 3–5 days metro, 5–8 days pan-India.
+  - Shipping Policy (`/shipping-policy`):
+    - • **Metro Cities:** 3–5 Business Days
+    - • **Rest of India:** 5–8 Business Days
   - Returns & Exchange Policy (`/returns-policy`) — 5–7 days sizing exchange.
   - Terms of Service (`/terms`) & Privacy Policy (`/privacy`).
   - **Bulk & Team Estimate Request Form (`/request-estimate`)**: Automated email quotation dispatch powered by **Resend** to `crownandcross29@gmail.com` with instant WhatsApp fallback.
@@ -136,7 +142,7 @@ RESEND_FROM_EMAIL=Crown & Cross <onboarding@resend.dev>
 ---
 
 ## 📞 Support & Inquiries
-- **WhatsApp:** [+91 76959 24602](https://wa.me/917695924602)
+- **WhatsApp:** [+91 76959 24602](https://api.whatsapp.com/send?phone=917695924602)
 - **Email:** crownandcross29@gmail.com
 - **Base:** Chennai, Tamil Nadu, India
 - **Owner:** Jason Clement

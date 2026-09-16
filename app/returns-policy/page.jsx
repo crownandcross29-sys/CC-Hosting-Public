@@ -1,3 +1,5 @@
+import { getWhatsAppUrl } from '../../lib/whatsapp';
+
 export const metadata = {
   title: 'Returns & Exchange Policy — Crown & Cross',
   description: '5-7 day sizing exchange terms, return eligibility, and refund guidelines.'
@@ -41,7 +43,23 @@ export default function ReturnsPolicyPage() {
           </h2>
           <ol style={{ paddingLeft: '20px', marginTop: '10px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
             <li>
-              Send a message to our WhatsApp support at <strong style={{ color: '#4ade80' }}>+91 76959 24602</strong> or email <strong style={{ color: 'var(--gold-primary)' }}>crownandcross29@gmail.com</strong> with your Order ID and photos showing the tags intact.
+              Send a message to our WhatsApp support at{' '}
+              <a
+                href={getWhatsAppUrl("Hello Crown & Cross, I would like to initiate a sizing exchange")}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: '#4ade80', fontWeight: 700, textDecoration: 'underline' }}
+              >
+                +91 76959 24602
+              </a>{' '}
+              or email{' '}
+              <a
+                href="mailto:crownandcross29@gmail.com?subject=Sizing%20Exchange%20Request"
+                style={{ color: 'var(--gold-primary)', fontWeight: 700, textDecoration: 'underline' }}
+              >
+                crownandcross29@gmail.com
+              </a>{' '}
+              with your Order ID and photos showing the tags intact.
             </li>
             <li>Specify the replacement size you require (e.g. swap Size M for Size L).</li>
             <li>Our team will verify stock and arrange reverse pickup or provide shipping instructions to our Chennai address.</li>

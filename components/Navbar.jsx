@@ -4,10 +4,19 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { useCart } from '../context/CartContext';
 import { ShoppingBag, MessageCircle, Menu, X, Sparkles } from 'lucide-react';
+import { getWhatsAppUrl, triggerWhatsApp } from '../lib/whatsapp';
 
 export default function Navbar() {
   const { totalItems, setIsCartOpen } = useCart();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const handleHashNav = (hash) => {
+    setMobileMenuOpen(false);
+    if (typeof window !== 'undefined' && window.location.pathname === '/') {
+      window.location.hash = hash;
+      window.dispatchEvent(new Event('hashchange'));
+    }
+  };
 
   return (
     <header
@@ -115,16 +124,16 @@ export default function Navbar() {
           }}
           className="desktop-nav"
         >
-          <Link href="/#catalog" style={{ color: 'var(--text-secondary)', transition: 'color 0.15s' }}>
+          <Link href="/#catalog" onClick={() => handleHashNav('catalog')} style={{ color: 'var(--text-secondary)', transition: 'color 0.15s' }}>
             Catalog
           </Link>
-          <Link href="/#club" style={{ color: 'var(--text-secondary)', transition: 'color 0.15s' }}>
+          <Link href="/#club" onClick={() => handleHashNav('club')} style={{ color: 'var(--text-secondary)', transition: 'color 0.15s' }}>
             Club
           </Link>
-          <Link href="/#country" style={{ color: 'var(--text-secondary)', transition: 'color 0.15s' }}>
+          <Link href="/#country" onClick={() => handleHashNav('country')} style={{ color: 'var(--text-secondary)', transition: 'color 0.15s' }}>
             Country
           </Link>
-          <Link href="/#retro" style={{ color: 'var(--gold-primary)', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+          <Link href="/#retro" onClick={() => handleHashNav('retro')} style={{ color: 'var(--gold-primary)', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
             <Sparkles size={13} /> Retro Kits
           </Link>
           <Link href="/size-guide" style={{ color: 'var(--text-secondary)', transition: 'color 0.15s' }}>
@@ -142,7 +151,8 @@ export default function Navbar() {
         <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
           {/* WhatsApp Direct Chat */}
           <a
-            href="https://wa.me/917695924602?text=Hello%20Crown%20%26%20Cross%2C%20I%20have%20an%20inquiry%20regarding%20jerseys"
+            href={getWhatsAppUrl("Hello Crown & Cross, I have an inquiry regarding jerseys")}
+            onClick={(e) => triggerWhatsApp({ text: "Hello Crown & Cross, I have an inquiry regarding jerseys", e })}
             target="_blank"
             rel="noopener noreferrer"
             style={{
@@ -237,17 +247,17 @@ export default function Navbar() {
             fontWeight: 600
           }}
         >
-          <Link href="/#catalog" onClick={() => setMobileMenuOpen(false)}>
+          <Link href="/#catalog" onClick={() => handleHashNav('catalog')}>
             Catalog
           </Link>
-          <Link href="/#club" onClick={() => setMobileMenuOpen(false)}>
+          <Link href="/#club" onClick={() => handleHashNav('club')}>
             Club Jerseys
           </Link>
-          <Link href="/#country" onClick={() => setMobileMenuOpen(false)}>
+          <Link href="/#country" onClick={() => handleHashNav('country')}>
             Country Kits
           </Link>
-          <Link href="/#retro" onClick={() => setMobileMenuOpen(false)} style={{ color: 'var(--gold-primary)' }}>
-            ★ Retro Classics
+          <Link href="/#retro" onClick={() => handleHashNav('retro')} style={{ color: 'var(--gold-primary)', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+            <Sparkles size={13} /> Retro Classics
           </Link>
           <Link href="/size-guide" onClick={() => setMobileMenuOpen(false)}>
             Size & Fit Guide
@@ -258,6 +268,27 @@ export default function Navbar() {
           <Link href="/request-estimate" onClick={() => setMobileMenuOpen(false)}>
             Bulk / Team Estimate
           </Link>
+          <a
+            href={getWhatsAppUrl("Hello Crown & Cross, I have an inquiry regarding jerseys")}
+            onClick={(e) => {
+              setMobileMenuOpen(false);
+              triggerWhatsApp({ text: "Hello Crown & Cross, I have an inquiry regarding jerseys", e });
+            }}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              color: '#4ade80',
+              paddingTop: '8px',
+              borderTop: '1px solid var(--border-subtle)',
+              cursor: 'pointer'
+            }}
+          >
+            <MessageCircle size={16} />
+            <span>Chat on WhatsApp (+91 76959 24602)</span>
+          </a>
         </div>
       )}
 

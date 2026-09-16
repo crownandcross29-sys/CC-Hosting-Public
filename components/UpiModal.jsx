@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import QRCode from 'qrcode';
 import { X, Check, Copy, MessageCircle, QrCode } from 'lucide-react';
+import { getWhatsAppUrl, triggerWhatsApp } from '../lib/whatsapp';
 
 export default function UpiModal({ orderDetails, onClose }) {
   const [qrDataUrl, setQrDataUrl] = useState('');
@@ -49,9 +50,7 @@ export default function UpiModal({ orderDetails, onClose }) {
     customer.phone || 'N/A'
   }\nAddress: ${customer.address || 'N/A'}, ${customer.city || ''} ${customer.pincode || ''}\n\nAttaching payment screenshot here!`;
 
-  const waScreenshotUrl = `https://wa.me/917695924602?text=${encodeURIComponent(
-    shareScreenshotText
-  )}`;
+  const waScreenshotUrl = getWhatsAppUrl(shareScreenshotText);
 
   return (
     <div
@@ -74,7 +73,9 @@ export default function UpiModal({ orderDetails, onClose }) {
           borderRadius: '24px',
           width: '100%',
           maxWidth: '480px',
-          padding: '30px 28px',
+          maxHeight: '90vh',
+          overflowY: 'auto',
+          padding: 'clamp(20px, 5vw, 30px) clamp(16px, 4vw, 28px)',
           boxShadow: '0 25px 60px rgba(0,0,0,0.8)',
           textAlign: 'center',
           position: 'relative'
@@ -206,6 +207,7 @@ export default function UpiModal({ orderDetails, onClose }) {
         {/* Action button */}
         <a
           href={waScreenshotUrl}
+          onClick={(e) => triggerWhatsApp({ text: shareScreenshotText, e })}
           target="_blank"
           rel="noopener noreferrer"
           style={{
@@ -221,7 +223,8 @@ export default function UpiModal({ orderDetails, onClose }) {
             fontWeight: 800,
             fontSize: '14px',
             textDecoration: 'none',
-            boxShadow: '0 4px 18px rgba(34, 197, 94, 0.3)'
+            boxShadow: '0 4px 18px rgba(34, 197, 94, 0.3)',
+            cursor: 'pointer'
           }}
         >
           <MessageCircle size={18} />

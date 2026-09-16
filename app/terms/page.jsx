@@ -37,7 +37,15 @@ export default function TermsPage() {
             3. Pricing &amp; UPI Payments
           </h2>
           <p>
-            All prices are listed in Indian Rupees (₹ INR). Payments are collected via direct UPI URI/QR code to payee <strong>Jason Clement</strong> (<code>jasonclement.jm-1@okhdfcbank</code>). Orders are officially queued for dispatch upon verification of the customer's payment transaction screenshot.
+            All prices are listed in Indian Rupees (₹ INR). Payments are collected via direct UPI URI/QR code to payee <strong>Jason Clement</strong> (
+            <a
+              href="upi://pay?pa=jasonclement.jm-1@okhdfcbank&pn=Jason%20Clement"
+              style={{ color: 'var(--gold-primary)', fontWeight: 600, textDecoration: 'underline' }}
+              title="Click to open in UPI app"
+            >
+              <code>jasonclement.jm-1@okhdfcbank</code>
+            </a>
+            ). Orders are officially queued for dispatch upon verification of the customer's payment transaction screenshot.
           </p>
         </div>
 

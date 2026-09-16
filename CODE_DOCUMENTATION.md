@@ -31,7 +31,8 @@ CC-Hosting-Public/
 ├── context/
 │   └── CartContext.jsx          # React Context for cart state & LocalStorage
 ├── lib/
-│   └── products.js              # Data reader for products.json
+│   ├── products.js              # Data reader for products.json
+│   └── whatsapp.js              # Universal cross-platform WhatsApp launcher
 ├── public/
 │   ├── data/products.json       # Master catalog database
 │   └── images/logo.jpeg         # Brand emblem asset
@@ -72,11 +73,16 @@ Built to satisfy the exact requirement: **Swipe, Click Arrow, Count Dots**.
 
 ## 4. Payment Integrations
 
-### WhatsApp Direct Link (`wa.me`)
-Constructs an encoded query string (`https://wa.me/917695924602?text=...`) containing:
+### Universal WhatsApp Engine (`lib/whatsapp.js`)
+Instead of legacy redirect links that drop text parameters, the storefront routes all WhatsApp actions through a specialized launcher:
+- **Direct Protocol Scheme (`whatsapp://send?phone=...&text=...`):** Immediately invokes the registered WhatsApp application on Windows, macOS, Android, and iOS (iPhone/iPad).
+- **Text Sanitization (`sanitizeWhatsAppText`):** Converts non-standard box-drawing characters (`━`, `─`, `═`) into standard hyphens (`-`), ensuring URL query strings are never truncated or corrupted by carrier webviews.
+- **Universal Web Fallback (`api.whatsapp.com/send`):** Automatically directs to WhatsApp Web if a desktop client is not detected within 1.4s, guaranteeing zero lost orders.
+
+Structured message payloads include:
 - Unique Order ID (`CC-XXXXXX`)
 - Itemized jersey titles, quality tiers, sizes, and quantities
-- Subtotal, shipping charge, and grand total
+- Subtotal, delivery charges, and grand total
 - Customer delivery address and optional notes
 
 ### Dynamic Client-Side UPI QR (`components/UpiModal.jsx`)
@@ -84,7 +90,7 @@ Encodes a standard NPCI UPI URI:
 ```
 upi://pay?pa=jasonclement.jm-1@okhdfcbank&pn=Jason%20Clement&am={grandTotal}&tn=Order%20{orderId}&cu=INR
 ```
-The `qrcode` package converts this URI to a high-resolution base64 PNG data URL in the user's browser, allowing payment through Google Pay, PhonePe, Paytm, or BHIM without any backend server.
+The `qrcode` package converts this URI to a high-resolution base64 PNG data URL in the user's browser, allowing payment through Google Pay, PhonePe, Paytm, or BHIM without any backend server. Includes 1-click WhatsApp screenshot dispatch.
 
 ---
 
@@ -121,7 +127,7 @@ Powered by the official **Resend** SDK (`resend`).
 ### Email Layout & Styling:
 Generates an inline-styled, dark-mode luxury HTML email containing:
 - Crown & Cross gold header emblem.
-- Structured specification table with clickable `wa.me` customer response link.
+- Structured specification table with clickable `api.whatsapp.com` customer response link.
 - Automated `replyTo` header pointing directly to the customer's submitted email.
 
 ### Vercel Production Environment Setup:
@@ -135,3 +141,19 @@ To enable live transactional emailing in production:
    | `RESEND_FROM_EMAIL` | `Crown & Cross <orders@yourdomain.com>` | Optional | Verified custom sender address in Resend (defaults to sandbox `onboarding@resend.dev`) |
 3. Trigger a **Redeploy** on Vercel to inject new environment variables into the serverless runtime.
 4. **Fallback Handling**: If `RESEND_API_KEY` is not provided or fails, the frontend dynamically presents fallback options: a direct pre-filled WhatsApp quotation chat and a pre-composed `mailto:` link.
+
+---
+
+## 6. Multi-Screen Responsive Architecture
+
+The storefront is engineered for seamless rendering across **Large**, **Medium**, and **Small** viewports:
+
+1. **Next.js 14 Viewport Export:** `app/layout.jsx` exports explicit `viewport` configurations (`width: 'device-width'`, `initialScale: 1`), enforcing proper mobile browser scaling.
+2. **Fluid Grid Layouts:** All grids use responsive auto-fit boundaries:
+   - Catalog: `gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 260px), 1fr))'`
+   - Featured: `gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))'`
+   - PDP: `gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))'`
+   - Footer: `gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 240px), 1fr))'`
+3. **No Horizontal Overflow:** Containers are protected by `maxWidth: 100%`, `overflow-x: hidden` on body, and `clamp()` spacing.
+4. **Touch Interactions:** `JerseyCarousel.jsx` features 45px swipe detection for natural mobile flick transitions.
+5. **Adaptive Modals:** `UpiModal.jsx` incorporates `maxHeight: '90vh'` and `overflowY: 'auto'` to maintain usability on compact and landscape screens.

@@ -1,6 +1,17 @@
+'use client';
+
 import Link from 'next/link';
+import { Sparkles } from 'lucide-react';
+import { getWhatsAppUrl, triggerWhatsApp } from '../lib/whatsapp';
 
 export default function Footer() {
+  const handleHashNav = (hash) => {
+    if (typeof window !== 'undefined' && window.location.pathname === '/') {
+      window.location.hash = hash;
+      window.dispatchEvent(new Event('hashchange'));
+    }
+  };
+
   return (
     <footer
       style={{
@@ -15,7 +26,7 @@ export default function Footer() {
           maxWidth: '1360px',
           margin: '0 auto',
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 240px), 1fr))',
           gap: '40px',
           marginBottom: '50px'
         }}
@@ -62,18 +73,18 @@ export default function Footer() {
           </h4>
           <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '14px' }}>
             <li>
-              <Link href="/#club" style={{ color: 'var(--text-secondary)' }}>
+              <Link href="/#club" onClick={() => handleHashNav('club')} style={{ color: 'var(--text-secondary)' }}>
                 Club Kits (23/24 & 24/25)
               </Link>
             </li>
             <li>
-              <Link href="/#country" style={{ color: 'var(--text-secondary)' }}>
+              <Link href="/#country" onClick={() => handleHashNav('country')} style={{ color: 'var(--text-secondary)' }}>
                 National Teams
               </Link>
             </li>
             <li>
-              <Link href="/#retro" style={{ color: 'var(--gold-light)' }}>
-                ★ Immortal Retro Editions
+              <Link href="/#retro" onClick={() => handleHashNav('retro')} style={{ color: 'var(--gold-light)', display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+                <Sparkles size={12} /> Immortal Retro Editions
               </Link>
             </li>
             <li>
@@ -106,10 +117,11 @@ export default function Footer() {
           <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '14px' }}>
             <li>
               <a
-                href="https://wa.me/917695924602"
+                href={getWhatsAppUrl("Hello Crown & Cross, I have an inquiry about football jerseys.")}
+                onClick={(e) => triggerWhatsApp({ text: "Hello Crown & Cross, I have an inquiry about football jerseys.", e })}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ color: '#4ade80', fontWeight: 600 }}
+                style={{ color: '#4ade80', fontWeight: 600, cursor: 'pointer' }}
               >
                 💬 WhatsApp: +91 76959 24602
               </a>
@@ -122,8 +134,12 @@ export default function Footer() {
             <li style={{ color: 'var(--text-secondary)', fontSize: '13px' }}>
               ⏱️ UPI Payee: <strong>Jason Clement</strong>
             </li>
-            <li style={{ color: 'var(--text-secondary)', fontSize: '13px' }}>
-              📦 Delivery: 3–5 Days (Metro) • 5–8 Days (Rest of India)
+            <li style={{ color: 'var(--text-secondary)', fontSize: '13px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+              <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>📦 Delivery Estimates:</span>
+              <ul style={{ listStyle: 'none', paddingLeft: '18px', display: 'flex', flexDirection: 'column', gap: '3px', color: 'var(--text-muted)' }}>
+                <li>• <strong>Metro:</strong> 3–5 Days</li>
+                <li>• <strong>Rest of India:</strong> 5–8 Days</li>
+              </ul>
             </li>
           </ul>
         </div>

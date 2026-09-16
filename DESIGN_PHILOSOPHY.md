@@ -37,3 +37,12 @@ Over 85% of football kit shoppers in India browse on mobile devices. The storefr
 - Sticky WhatsApp order CTAs.
 - Thumb-friendly bottom action drawers.
 - Compact, high-contrast tables for sizing charts.
+
+---
+
+## 4. Universal Ergonomics & The "Zero Dead Link" Policy
+
+Every customer touchpoint must respect device context and time:
+1. **Device-Agnostic Fluidity:** Whether viewing on a 4K desktop monitor, an iPad, or a compact 320px phone, the layout scales smoothly using CSS `clamp()` and fluid grid `minmax(min(100%, ...), 1fr)` with zero horizontal overflow.
+2. **Protocol Deep-Linking:** Ordering via WhatsApp directly invokes the installed application (`whatsapp://send`), bypassing intermediate landing pages with pre-filled items, sizing, and pricing.
+3. **Graceful Degradation:** When services are offline or unconfigured (such as missing Resend API keys or lack of a desktop WhatsApp client), the UI seamlessly offers working fallbacks so the customer is never stranded.

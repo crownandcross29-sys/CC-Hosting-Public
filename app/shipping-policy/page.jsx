@@ -1,3 +1,5 @@
+import { getWhatsAppUrl } from '../../lib/whatsapp';
+
 export const metadata = {
   title: 'Shipping & Delivery Policy — Crown & Cross',
   description: 'Pan-India shipping rates, delivery timelines, and tracking policies.'
@@ -47,7 +49,23 @@ export default function ShippingPolicyPage() {
             3. Order Tracking &amp; Verification
           </h2>
           <p>
-            Once your payment screenshot is verified on WhatsApp (<strong>+91 76959 24602</strong>) or email (<strong>crownandcross29@gmail.com</strong>), you will receive:
+            Once your payment screenshot is verified on WhatsApp (
+            <a
+              href={getWhatsAppUrl("Hello Crown & Cross, attaching my payment verification")}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: '#4ade80', fontWeight: 700, textDecoration: 'underline' }}
+            >
+              +91 76959 24602
+            </a>
+            ) or email (
+            <a
+              href="mailto:crownandcross29@gmail.com?subject=Payment%20Verification"
+              style={{ color: 'var(--gold-primary)', fontWeight: 700, textDecoration: 'underline' }}
+            >
+              crownandcross29@gmail.com
+            </a>
+            ), you will receive:
           </p>
           <ul style={{ paddingLeft: '20px', marginTop: '10px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
             <li>An immediate order confirmation message with your Order ID.</li>
@@ -60,7 +78,16 @@ export default function ShippingPolicyPage() {
             4. Damaged or Tampered Parcels
           </h2>
           <p>
-            If the package arrives visibly damaged or tampered with, please record an unboxing video and immediately notify our WhatsApp support at <strong>+91 76959 24602</strong> within 24 hours of delivery so we can issue an instant replacement.
+            If the package arrives visibly damaged or tampered with, please record an unboxing video and immediately notify our WhatsApp support at{' '}
+            <a
+              href={getWhatsAppUrl("Hello Crown & Cross, reporting damaged parcel")}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: '#4ade80', fontWeight: 700, textDecoration: 'underline' }}
+            >
+              +91 76959 24602
+            </a>{' '}
+            within 24 hours of delivery so we can issue an instant replacement.
           </p>
         </div>
       </div>

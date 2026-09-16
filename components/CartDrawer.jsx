@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useCart } from '../context/CartContext';
+import { getWhatsAppUrl, triggerWhatsApp } from '../lib/whatsapp';
 import {
   ShoppingBag,
   X,
@@ -46,17 +47,17 @@ export default function CartDrawer() {
   if (!isCartOpen) return null;
 
   // Build structured WhatsApp order message
-  const buildWhatsAppMessage = () => {
+  const buildWhatsAppText = () => {
     const orderId = `CC-${Math.floor(100000 + Math.random() * 900000)}`;
     let text = `👑 *NEW CROWN & CROSS ORDER* — #${orderId}\n`;
-    text += `━━━━━━━━━━━━━━━━━━━━━\n`;
+    text += `-------------------------------------\n`;
     items.forEach((item, index) => {
       text += `${index + 1}. *${item.name}*\n`;
       text += `   • Quality: ${item.subCategory}\n`;
       text += `   • Size: ${item.size} | Qty: ${item.quantity}\n`;
       text += `   • Price: ₹${item.price * item.quantity}\n\n`;
     });
-    text += `━━━━━━━━━━━━━━━━━━━━━\n`;
+    text += `-------------------------------------\n`;
     text += `Subtotal: ₹${subtotal}\n`;
     text += `Shipping: ${isFreeShipping ? 'FREE (Special Offer)' : `₹${shipping}`}\n`;
     text += `*GRAND TOTAL: ₹${grandTotal}*\n\n`;
@@ -68,7 +69,7 @@ export default function CartDrawer() {
     if (customer.note) text += `Note: ${customer.note}\n`;
     text += `\nPlease confirm availability and payment verification!`;
 
-    return `https://wa.me/917695924602?text=${encodeURIComponent(text)}`;
+    return text;
   };
 
   const handleOpenUpi = () => {
@@ -385,7 +386,8 @@ export default function CartDrawer() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {/* Option 1: WhatsApp Checkout */}
               <a
-                href={buildWhatsAppMessage()}
+                href={getWhatsAppUrl(buildWhatsAppText())}
+                onClick={(e) => triggerWhatsApp({ text: buildWhatsAppText(), e })}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
@@ -400,7 +402,8 @@ export default function CartDrawer() {
                   fontWeight: 800,
                   fontSize: '14px',
                   textDecoration: 'none',
-                  boxShadow: '0 4px 16px rgba(34, 197, 94, 0.25)'
+                  boxShadow: '0 4px 16px rgba(34, 197, 94, 0.25)',
+                  cursor: 'pointer'
                 }}
               >
                 <MessageCircle size={18} /> Order via WhatsApp Direct

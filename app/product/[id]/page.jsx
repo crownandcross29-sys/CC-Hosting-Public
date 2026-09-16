@@ -6,6 +6,7 @@ import Link from 'next/link';
 import JerseyCarousel from '../../../components/JerseyCarousel';
 import ProductCard from '../../../components/ProductCard';
 import { useCart } from '../../../context/CartContext';
+import { getWhatsAppUrl, triggerWhatsApp } from '../../../lib/whatsapp';
 import {
   Award,
   Truck,
@@ -82,9 +83,8 @@ export default function ProductDetailPage() {
       ? Math.round(((product.mrp - product.price) / product.mrp) * 100)
       : null;
 
-  const directWhatsAppUrl = `https://wa.me/917695924602?text=${encodeURIComponent(
-    `Hello Crown & Cross, I would like to buy:\n\nKit: ${product.name}\nQuality: ${product.subCategory}\nSize: ${selectedSize}\nQuantity: ${quantity}\nPrice: ₹${product.price * quantity}\n\nPlease confirm availability!`
-  )}`;
+  const directWhatsAppText = `Hello Crown & Cross, I would like to buy:\n\nKit: ${product.name}\nQuality: ${product.subCategory}\nSize: ${selectedSize}\nQuantity: ${quantity}\nPrice: ₹${product.price * quantity}\n\nPlease confirm availability!`;
+  const directWhatsAppUrl = getWhatsAppUrl(directWhatsAppText);
 
   const relatedKits = allProducts
     .filter((p) => p.id !== product.id && p.category === product.category)
@@ -109,8 +109,8 @@ export default function ProductDetailPage() {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))',
-          gap: '48px',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
+          gap: 'clamp(24px, 4vw, 48px)',
           alignItems: 'start'
         }}
       >
@@ -321,6 +321,7 @@ export default function ProductDetailPage() {
 
             <a
               href={directWhatsAppUrl}
+              onClick={(e) => triggerWhatsApp({ text: directWhatsAppText, e })}
               target="_blank"
               rel="noopener noreferrer"
               style={{
@@ -335,7 +336,8 @@ export default function ProductDetailPage() {
                 fontSize: '14px',
                 fontWeight: 800,
                 textDecoration: 'none',
-                boxShadow: '0 6px 20px rgba(34, 197, 94, 0.25)'
+                boxShadow: '0 6px 20px rgba(34, 197, 94, 0.25)',
+                cursor: 'pointer'
               }}
             >
               <MessageCircle size={18} />

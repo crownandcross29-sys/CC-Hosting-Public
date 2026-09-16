@@ -63,7 +63,7 @@ export async function POST(request) {
               <tr style="border-bottom: 1px solid #233428;">
                 <td style="padding: 10px 0; color: #a4b6a9;">WhatsApp Phone:</td>
                 <td style="padding: 10px 0;">
-                  <a href="https://wa.me/${phone.replace(/[^0-9]/g, '')}" style="color: #4ade80; text-decoration: none; font-weight: bold;">
+                  <a href="https://api.whatsapp.com/send?phone=${phone.replace(/[^0-9]/g, '')}" style="color: #4ade80; text-decoration: none; font-weight: bold;">
                     ${phone} (Chat on WhatsApp)
                   </a>
                 </td>
@@ -99,7 +99,7 @@ export async function POST(request) {
             </table>
 
             <div style="text-align: center; margin-top: 28px;">
-              <a href="https://wa.me/${phone.replace(/[^0-9]/g, '')}" style="display: inline-block; background-color: #22c55e; color: #0d140f; font-weight: bold; text-decoration: none; padding: 12px 24px; border-radius: 999px; font-size: 14px;">
+              <a href="https://api.whatsapp.com/send?phone=${phone.replace(/[^0-9]/g, '')}" style="display: inline-block; background-color: #22c55e; color: #0d140f; font-weight: bold; text-decoration: none; padding: 12px 24px; border-radius: 999px; font-size: 14px;">
                 Reply to Customer on WhatsApp →
               </a>
             </div>

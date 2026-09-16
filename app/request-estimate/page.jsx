@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { MailCheck, Send, MessageCircle, RefreshCw } from 'lucide-react';
+import { getWhatsAppUrl, triggerWhatsApp } from '../../lib/whatsapp';
 
 export default function RequestEstimatePage() {
   const [formData, setFormData] = useState({
@@ -21,12 +22,11 @@ export default function RequestEstimatePage() {
   const [errorNotice, setErrorNotice] = useState(null);
 
   const buildWhatsAppText = () => {
-    return `👑 *CROWN & CROSS — BULK / TEAM ESTIMATE REQUEST*\n━━━━━━━━━━━━━━━━━━━━━\nName: ${formData.name}\nPhone: ${formData.phone}\nEmail: ${formData.email || 'N/A'}\nTeam/Club: ${formData.organization || 'Individual/Group'}\n\nKit Type: ${formData.kitType}\nQuality Tier: ${formData.qualityTier}\nEstimated Quantity: ${formData.quantity} kits\nCustom Names & Numbers: ${formData.customNames}\n\nAdditional Requirements:\n${formData.notes || 'None'}\n\nPlease provide a customized price quote and delivery timeline!`;
+    return `👑 *CROWN & CROSS - BULK / TEAM ESTIMATE REQUEST*\n-------------------------------------\nName: ${formData.name}\nPhone: ${formData.phone}\nEmail: ${formData.email || 'N/A'}\nTeam/Club: ${formData.organization || 'Individual/Group'}\n\nKit Type: ${formData.kitType}\nQuality Tier: ${formData.qualityTier}\nEstimated Quantity: ${formData.quantity} kits\nCustom Names & Numbers: ${formData.customNames}\n\nAdditional Requirements:\n${formData.notes || 'None'}\n\nPlease provide a customized price quote and delivery timeline!`;
   };
 
-  const handleOpenWhatsAppDirect = () => {
-    const waUrl = `https://wa.me/917695924602?text=${encodeURIComponent(buildWhatsAppText())}`;
-    window.open(waUrl, '_blank');
+  const handleOpenWhatsAppDirect = (e) => {
+    triggerWhatsApp({ text: buildWhatsAppText(), e });
   };
 
   const handleOpenMailto = () => {

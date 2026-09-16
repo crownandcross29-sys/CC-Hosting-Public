@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useCart } from '../context/CartContext';
+import { Plus, Sparkles } from 'lucide-react';
 
 export default function ProductCard({ product }) {
   const { addToCart } = useCart();
@@ -59,10 +60,13 @@ export default function ProductCard({ product }) {
             fontWeight: 800,
             padding: '4px 8px',
             borderRadius: '999px',
-            zIndex: 2
+            zIndex: 2,
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '4px'
           }}
         >
-          ★ FEATURED
+          <Sparkles size={11} /> FEATURED
         </span>
       )}
 
@@ -165,11 +169,14 @@ export default function ProductCard({ product }) {
               fontSize: '12px',
               fontWeight: 800,
               cursor: 'pointer',
-              transition: 'all 0.15s',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '5px',
               whiteSpace: 'nowrap'
             }}
           >
-            + Add
+            <Plus size={13} strokeWidth={3} />
+            <span>Add</span>
           </button>
         </div>
       </div>

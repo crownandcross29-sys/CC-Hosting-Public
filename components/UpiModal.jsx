@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import QRCode from 'qrcode';
+import { X, Check, Copy, MessageCircle, QrCode } from 'lucide-react';
 
 export default function UpiModal({ orderDetails, onClose }) {
   const [qrDataUrl, setQrDataUrl] = useState('');
@@ -88,11 +89,15 @@ export default function UpiModal({ orderDetails, onClose }) {
             background: 'none',
             border: 'none',
             color: 'var(--text-muted)',
-            fontSize: '22px',
-            cursor: 'pointer'
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            padding: '4px',
+            borderRadius: '6px'
           }}
         >
-          ✕
+          <X size={20} />
         </button>
 
         <div style={{ display: 'inline-block', padding: '6px 14px', borderRadius: '999px', background: 'var(--gold-glow)', border: '1px solid var(--gold-primary)', color: 'var(--gold-primary)', fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '14px' }}>
@@ -171,10 +176,13 @@ export default function UpiModal({ orderDetails, onClose }) {
               border: 'none',
               color: copied ? '#4ade80' : 'var(--gold-primary)',
               fontWeight: 700,
-              cursor: 'pointer'
+              cursor: 'pointer',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '5px'
             }}
           >
-            {copied ? '✓ Copied!' : 'Copy VPA'}
+            {copied ? <><Check size={13} /> Copied!</> : <><Copy size={13} /> Copy VPA</>}
           </button>
         </div>
 
@@ -201,7 +209,10 @@ export default function UpiModal({ orderDetails, onClose }) {
           target="_blank"
           rel="noopener noreferrer"
           style={{
-            display: 'block',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '8px',
             width: '100%',
             padding: '12px',
             borderRadius: '12px',
@@ -213,7 +224,8 @@ export default function UpiModal({ orderDetails, onClose }) {
             boxShadow: '0 4px 18px rgba(34, 197, 94, 0.3)'
           }}
         >
-          Send Screenshot on WhatsApp 💬
+          <MessageCircle size={18} />
+          <span>Send Screenshot on WhatsApp</span>
         </a>
       </div>
     </div>

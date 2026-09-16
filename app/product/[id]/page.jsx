@@ -6,6 +6,14 @@ import Link from 'next/link';
 import JerseyCarousel from '../../../components/JerseyCarousel';
 import ProductCard from '../../../components/ProductCard';
 import { useCart } from '../../../context/CartContext';
+import {
+  Award,
+  Truck,
+  Ruler,
+  ShoppingBag,
+  MessageCircle,
+  X
+} from 'lucide-react';
 
 export default function ProductDetailPage() {
   const { id } = useParams();
@@ -138,10 +146,14 @@ export default function ProductDetailPage() {
                 borderRadius: '999px',
                 backgroundColor: 'var(--bg-elevated)',
                 color: 'var(--text-primary)',
-                border: '1px solid var(--border-subtle)'
+                border: '1px solid var(--border-subtle)',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '5px'
               }}
             >
-              ⭐ {product.subCategory}
+              <Award size={13} color="var(--gold-primary)" />
+              <span>{product.subCategory}</span>
             </span>
             <span style={{ fontSize: '12px', color: 'var(--status-instock)', fontWeight: 700 }}>
               ● {product.stockStatus || 'In Stock'}
@@ -194,10 +206,10 @@ export default function ProductDetailPage() {
               color: 'var(--text-secondary)',
               display: 'flex',
               alignItems: 'center',
-              gap: '10px'
+              gap: '12px'
             }}
           >
-            <span>📦</span>
+            <Truck size={18} color="var(--gold-primary)" style={{ flexShrink: 0 }} />
             <div>
               <strong>Pan-India Shipping:</strong> ₹80 (Free on orders above ₹1,499). Metro delivery in 3–5 days from Chennai.
             </div>
@@ -219,10 +231,14 @@ export default function ProductDetailPage() {
                   fontSize: '12px',
                   fontWeight: 700,
                   cursor: 'pointer',
-                  textDecoration: 'underline'
+                  textDecoration: 'underline',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '4px'
                 }}
               >
-                📐 View Size Guide
+                <Ruler size={13} />
+                <span>View Size Guide</span>
               </button>
             </div>
 
@@ -281,6 +297,10 @@ export default function ProductDetailPage() {
               type="button"
               onClick={() => addToCart(product, selectedSize, quantity)}
               style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
                 padding: '16px',
                 borderRadius: '12px',
                 backgroundColor: 'var(--gold-primary)',
@@ -295,7 +315,8 @@ export default function ProductDetailPage() {
                 transition: 'all 0.15s'
               }}
             >
-              Add To Cart 🛒
+              <ShoppingBag size={18} />
+              <span>Add To Cart</span>
             </button>
 
             <a
@@ -317,7 +338,8 @@ export default function ProductDetailPage() {
                 boxShadow: '0 6px 20px rgba(34, 197, 94, 0.25)'
               }}
             >
-              <span>💬</span> Buy Now with WhatsApp Direct
+              <MessageCircle size={18} />
+              <span>Buy Now with WhatsApp Direct</span>
             </a>
           </div>
 
@@ -381,11 +403,15 @@ export default function ProductDetailPage() {
                 background: 'none',
                 border: 'none',
                 color: 'var(--text-muted)',
-                fontSize: '20px',
-                cursor: 'pointer'
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                padding: '4px',
+                borderRadius: '6px'
               }}
             >
-              ✕
+              <X size={20} />
             </button>
             <h3 className="serif-heading" style={{ fontSize: '20px', color: 'var(--gold-primary)', marginBottom: '6px' }}>
               Size &amp; Fit Guide

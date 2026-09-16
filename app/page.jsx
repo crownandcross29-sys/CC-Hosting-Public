@@ -3,6 +3,16 @@
 import { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import ProductCard from '../components/ProductCard';
+import {
+  Sparkles,
+  ArrowDown,
+  Zap,
+  ShieldCheck,
+  Truck,
+  MessageCircle,
+  Search,
+  X
+} from 'lucide-react';
 
 const CATEGORIES = ['All', 'Club', 'Country', 'Retro'];
 const SUB_CATEGORIES = [
@@ -86,7 +96,7 @@ export default function HomePage() {
               marginBottom: '20px'
             }}
           >
-            <span>⚽</span> Authentic & Retro Football Kit Sanctuary
+            <Sparkles size={13} /> Authentic & Retro Football Kit Sanctuary
           </div>
 
           <h1
@@ -122,6 +132,9 @@ export default function HomePage() {
             <a
               href="#catalog"
               style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
                 padding: '14px 30px',
                 borderRadius: '999px',
                 backgroundColor: 'var(--gold-primary)',
@@ -134,7 +147,8 @@ export default function HomePage() {
                 transition: 'all 0.2s'
               }}
             >
-              Shop Jersey Catalog ↓
+              <span>Shop Jersey Catalog</span>
+              <ArrowDown size={15} />
             </a>
 
             <button
@@ -144,6 +158,9 @@ export default function HomePage() {
                 if (catalogElem) catalogElem.scrollIntoView({ behavior: 'smooth' });
               }}
               style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
                 padding: '14px 28px',
                 borderRadius: '999px',
                 backgroundColor: 'var(--bg-elevated)',
@@ -156,7 +173,8 @@ export default function HomePage() {
                 textTransform: 'uppercase'
               }}
             >
-              ★ Retro Classics
+              <Sparkles size={14} color="var(--gold-primary)" />
+              <span>Retro Classics</span>
             </button>
           </div>
 
@@ -173,19 +191,31 @@ export default function HomePage() {
             }}
           >
             <div>
-              <div style={{ fontSize: '18px', color: 'var(--gold-primary)', fontWeight: 800 }}>⚡ 3–5 Days</div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', fontSize: '18px', color: 'var(--gold-primary)', fontWeight: 800 }}>
+                <Zap size={18} />
+                <span>3–5 Days</span>
+              </div>
               <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: '2px' }}>Metro Delivery Turnaround</div>
             </div>
             <div>
-              <div style={{ fontSize: '18px', color: 'var(--gold-primary)', fontWeight: 800 }}>🛡️ 5–7 Days</div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', fontSize: '18px', color: 'var(--gold-primary)', fontWeight: 800 }}>
+                <ShieldCheck size={18} />
+                <span>5–7 Days</span>
+              </div>
               <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: '2px' }}>Sizing Exchange Window</div>
             </div>
             <div>
-              <div style={{ fontSize: '18px', color: 'var(--gold-primary)', fontWeight: 800 }}>🚚 Free Delivery</div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', fontSize: '18px', color: 'var(--gold-primary)', fontWeight: 800 }}>
+                <Truck size={18} />
+                <span>Free Delivery</span>
+              </div>
               <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: '2px' }}>On all orders above ₹1,499</div>
             </div>
             <div>
-              <div style={{ fontSize: '18px', color: 'var(--gold-primary)', fontWeight: 800 }}>💬 WhatsApp UPI</div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', fontSize: '18px', color: 'var(--gold-primary)', fontWeight: 800 }}>
+                <MessageCircle size={18} />
+                <span>WhatsApp UPI</span>
+              </div>
               <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: '2px' }}>Instant 1-Click Order Flow</div>
             </div>
           </div>
@@ -276,7 +306,18 @@ export default function HomePage() {
             </div>
 
             {/* Search Input */}
-            <div style={{ flex: '1 1 260px', maxWidth: '360px' }}>
+            <div style={{ flex: '1 1 260px', maxWidth: '360px', position: 'relative' }}>
+              <Search
+                size={16}
+                style={{
+                  position: 'absolute',
+                  left: '12px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  color: 'var(--text-muted)',
+                  pointerEvents: 'none'
+                }}
+              />
               <input
                 type="text"
                 placeholder="Search team, kit, player..."
@@ -284,7 +325,7 @@ export default function HomePage() {
                 onChange={(e) => setSearch(e.target.value)}
                 style={{
                   width: '100%',
-                  padding: '10px 14px',
+                  padding: '10px 36px 10px 36px',
                   backgroundColor: 'var(--bg-primary)',
                   border: '1px solid var(--border-subtle)',
                   borderRadius: '10px',
@@ -293,6 +334,25 @@ export default function HomePage() {
                   outline: 'none'
                 }}
               />
+              {search && (
+                <button
+                  type="button"
+                  onClick={() => setSearch('')}
+                  style={{
+                    position: 'absolute',
+                    right: '10px',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    background: 'none',
+                    border: 'none',
+                    color: 'var(--text-muted)',
+                    cursor: 'pointer',
+                    padding: '2px'
+                  }}
+                >
+                  <X size={14} />
+                </button>
+              )}
             </div>
           </div>
 

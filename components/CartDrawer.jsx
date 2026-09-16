@@ -2,6 +2,18 @@
 
 import { useState } from 'react';
 import { useCart } from '../context/CartContext';
+import {
+  ShoppingBag,
+  X,
+  PackageOpen,
+  Trash2,
+  MapPin,
+  ChevronUp,
+  ChevronDown,
+  MessageCircle,
+  QrCode,
+  Sparkles
+} from 'lucide-react';
 
 export default function CartDrawer() {
   const {
@@ -108,7 +120,7 @@ export default function CartDrawer() {
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ fontSize: '20px' }}>🛒</span>
+            <ShoppingBag size={20} color="var(--gold-primary)" />
             <h2 className="serif-heading" style={{ fontSize: '20px', fontWeight: 700, color: 'var(--gold-primary)' }}>
               Your Jersey Cart
             </h2>
@@ -119,11 +131,15 @@ export default function CartDrawer() {
               background: 'none',
               border: 'none',
               color: 'var(--text-muted)',
-              fontSize: '22px',
-              cursor: 'pointer'
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              padding: '4px',
+              borderRadius: '6px'
             }}
           >
-            ✕
+            <X size={20} />
           </button>
         </div>
 
@@ -170,7 +186,9 @@ export default function CartDrawer() {
         <div style={{ flex: 1, overflowY: 'auto', padding: '20px 24px' }}>
           {items.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '60px 0', color: 'var(--text-secondary)' }}>
-              <div style={{ fontSize: '48px', marginBottom: '12px' }}>⚽</div>
+              <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '14px' }}>
+                <PackageOpen size={48} color="var(--gold-primary)" strokeWidth={1.5} />
+              </div>
               <h3 style={{ fontSize: '18px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '8px' }}>
                 Your cart is empty
               </h3>
@@ -214,12 +232,15 @@ export default function CartDrawer() {
                           background: 'none',
                           border: 'none',
                           color: 'var(--text-muted)',
-                          fontSize: '14px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
                           cursor: 'pointer',
-                          padding: '0 4px'
+                          padding: '4px',
+                          borderRadius: '6px'
                         }}
                       >
-                        ✕
+                        <Trash2 size={15} />
                       </button>
                     </div>
 
@@ -272,8 +293,11 @@ export default function CartDrawer() {
                     alignItems: 'center'
                   }}
                 >
-                  <span>📍 {customer.address ? 'Edit Delivery Address' : '+ Add Delivery Address (Optional)'}</span>
-                  <span>{showAddressForm ? '▲' : '▼'}</span>
+                  <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <MapPin size={14} />
+                    {customer.address ? 'Edit Delivery Address' : '+ Add Delivery Address (Optional)'}
+                  </span>
+                  <span>{showAddressForm ? <ChevronUp size={16} /> : <ChevronDown size={16} />}</span>
                 </button>
 
                 {showAddressForm && (
@@ -379,7 +403,7 @@ export default function CartDrawer() {
                   boxShadow: '0 4px 16px rgba(34, 197, 94, 0.25)'
                 }}
               >
-                <span>💬</span> Order via WhatsApp Direct
+                <MessageCircle size={18} /> Order via WhatsApp Direct
               </a>
 
               {/* Option 2: Pay via UPI QR Modal */}
@@ -402,7 +426,7 @@ export default function CartDrawer() {
                   boxShadow: '0 4px 16px rgba(200, 169, 106, 0.25)'
                 }}
               >
-                <span>⚡</span> Pay via UPI QR (Auto-Generated)
+                <QrCode size={18} /> Pay via UPI QR (Auto-Generated)
               </button>
             </div>
           </div>

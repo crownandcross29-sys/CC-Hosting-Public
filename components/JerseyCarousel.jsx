@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function JerseyCarousel({ images = [], name = 'Jersey' }) {
   const safeImages = images.length > 0 ? images : ['https://images.unsplash.com/photo-1517466787929-bc90951d0974?auto=format&fit=crop&w=800&q=80'];
@@ -94,7 +95,7 @@ export default function JerseyCarousel({ images = [], name = 'Jersey' }) {
                 zIndex: 5
               }}
             >
-              ‹
+              <ChevronLeft size={20} />
             </button>
 
             <button
@@ -113,7 +114,6 @@ export default function JerseyCarousel({ images = [], name = 'Jersey' }) {
                 backdropFilter: 'blur(6px)',
                 border: '1px solid var(--border-active)',
                 color: 'var(--gold-primary)',
-                fontSize: '18px',
                 display: 'grid',
                 placeItems: 'center',
                 cursor: 'pointer',
@@ -121,7 +121,7 @@ export default function JerseyCarousel({ images = [], name = 'Jersey' }) {
                 zIndex: 5
               }}
             >
-              ›
+              <ChevronRight size={20} />
             </button>
           </>
         )}

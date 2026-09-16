@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { useCart } from '../context/CartContext';
+import { ShoppingBag, MessageCircle, Menu, X, Sparkles } from 'lucide-react';
 
 export default function Navbar() {
   const { totalItems, setIsCartOpen } = useCart();
@@ -123,8 +124,8 @@ export default function Navbar() {
           <Link href="/#country" style={{ color: 'var(--text-secondary)', transition: 'color 0.15s' }}>
             Country
           </Link>
-          <Link href="/#retro" style={{ color: 'var(--gold-primary)', fontWeight: 700 }}>
-            ★ Retro Kits
+          <Link href="/#retro" style={{ color: 'var(--gold-primary)', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+            <Sparkles size={13} /> Retro Kits
           </Link>
           <Link href="/size-guide" style={{ color: 'var(--text-secondary)', transition: 'color 0.15s' }}>
             Size Guide
@@ -157,7 +158,7 @@ export default function Navbar() {
               color: '#4ade80'
             }}
           >
-            <span>💬</span>
+            <MessageCircle size={15} />
             <span className="hide-mobile">+91 76959 24602</span>
           </a>
 
@@ -180,7 +181,8 @@ export default function Navbar() {
               boxShadow: '0 4px 14px rgba(200, 169, 106, 0.25)'
             }}
           >
-            <span>🛒 Cart</span>
+            <ShoppingBag size={15} />
+            <span>Cart</span>
             {totalItems > 0 && (
               <span
                 style={{
@@ -210,11 +212,13 @@ export default function Navbar() {
               borderRadius: '8px',
               color: 'var(--text-primary)',
               padding: '8px 10px',
-              fontSize: '16px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
               cursor: 'pointer'
             }}
           >
-            ☰
+            {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
       </div>

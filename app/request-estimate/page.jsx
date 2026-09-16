@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { MailCheck, Send, MessageCircle, RefreshCw } from 'lucide-react';
 
 export default function RequestEstimatePage() {
   const [formData, setFormData] = useState({
@@ -93,7 +94,9 @@ export default function RequestEstimatePage() {
       <div style={{ backgroundColor: 'var(--bg-surface)', border: '1px solid var(--border-subtle)', borderRadius: '24px', padding: '36px', boxShadow: 'var(--shadow-card)' }}>
         {submitted ? (
           <div style={{ textAlign: 'center', padding: '30px 0' }}>
-            <div style={{ fontSize: '48px', marginBottom: '16px' }}>✉️</div>
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px' }}>
+              <MailCheck size={48} color="var(--gold-primary)" />
+            </div>
             <h3 className="serif-heading" style={{ fontSize: '24px', color: 'var(--gold-primary)', marginBottom: '8px' }}>
               Estimate Request Emailed Successfully!
             </h3>
@@ -120,7 +123,8 @@ export default function RequestEstimatePage() {
                   boxShadow: '0 4px 14px rgba(34, 197, 94, 0.3)'
                 }}
               >
-                <span>💬</span> Also Chat on WhatsApp
+                <MessageCircle size={16} />
+                <span>Also Chat on WhatsApp</span>
               </button>
 
               <button
@@ -346,6 +350,10 @@ export default function RequestEstimatePage() {
                 disabled={loading}
                 style={{
                   flex: '1 1 240px',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
                   padding: '14px',
                   borderRadius: '12px',
                   backgroundColor: 'var(--gold-primary)',
@@ -359,7 +367,17 @@ export default function RequestEstimatePage() {
                   letterSpacing: '0.04em'
                 }}
               >
-                {loading ? 'Sending Estimate Email...' : '✉️ Email Estimate Request'}
+                {loading ? (
+                  <>
+                    <RefreshCw size={16} className="animate-spin" />
+                    <span>Sending Estimate Email...</span>
+                  </>
+                ) : (
+                  <>
+                    <Send size={16} />
+                    <span>Email Estimate Request</span>
+                  </>
+                )}
               </button>
 
               <button
@@ -367,6 +385,10 @@ export default function RequestEstimatePage() {
                 onClick={handleOpenWhatsAppDirect}
                 style={{
                   flex: '1 1 200px',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
                   padding: '14px',
                   borderRadius: '12px',
                   backgroundColor: '#22c55e',
@@ -380,7 +402,8 @@ export default function RequestEstimatePage() {
                   letterSpacing: '0.04em'
                 }}
               >
-                💬 Send via WhatsApp
+                <MessageCircle size={16} />
+                <span>Send via WhatsApp</span>
               </button>
             </div>
           </form>

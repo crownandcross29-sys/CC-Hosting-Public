@@ -44,10 +44,12 @@ CC-Hosting-Public/
 
 ## 2. State Management: `context/CartContext.jsx`
 
-The global shopping cart is managed via React Context and automatically synchronizes with browser `localStorage` under the key `cc_cart`.
+The global shopping cart is managed via React Context and automatically synchronizes with browser `localStorage` under keys `cc_cart` and `cc_customer`. An `isLoaded` hydration gate ensures existing cart items and shipping details are safely restored upon page refresh without being wiped by the initial mount state.
 
 ### Exposed Context Values:
 - **`items`**: Array of cart items `{ key, id, name, size, price, mrp, image, category, subCategory, quantity }`.
+- **`customer` / `setCustomer`**: Delivery address details `{ name, phone, address, city, pincode, note }` preserved in `localStorage`.
+- **`isLoaded`**: Boolean indicating whether cart data has finished hydrating from `localStorage`.
 - **`addToCart(product, size, quantity)`**: Adds or updates an item in the cart.
 - **`updateQuantity(key, delta)`**: Modifies item count; automatically removes items when quantity reaches 0.
 - **`removeItem(key)`**: Removes a line item.

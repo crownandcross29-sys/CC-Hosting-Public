@@ -30,25 +30,24 @@ export default function CartDrawer() {
     isFreeShipping,
     amountToFreeShipping,
     freeShippingProgress,
-    setActiveUpiOrder
+    setActiveUpiOrder,
+    customer,
+    setCustomer
   } = useCart();
-
-  const [customer, setCustomer] = useState({
-    name: '',
-    phone: '',
-    address: '',
-    city: '',
-    pincode: '',
-    note: ''
-  });
 
   const [showAddressForm, setShowAddressForm] = useState(false);
 
   if (!isCartOpen) return null;
 
+  const createUniqueOrderId = () => {
+    const timeToken = Date.now().toString(36).toUpperCase().slice(-5);
+    const randToken = Math.floor(1000 + Math.random() * 9000);
+    return `CC-${timeToken}-${randToken}`;
+  };
+
   // Build structured WhatsApp order message
   const buildWhatsAppText = () => {
-    const orderId = `CC-${Math.floor(100000 + Math.random() * 900000)}`;
+    const orderId = createUniqueOrderId();
     let text = `*NEW CROWN & CROSS ORDER* - #${orderId}\n`;
     text += `-------------------------------------\n`;
     items.forEach((item, index) => {
@@ -73,7 +72,7 @@ export default function CartDrawer() {
   };
 
   const handleOpenUpi = () => {
-    const orderId = `CC-${Math.floor(100000 + Math.random() * 900000)}`;
+    const orderId = createUniqueOrderId();
     setActiveUpiOrder({
       orderId,
       amount: grandTotal,

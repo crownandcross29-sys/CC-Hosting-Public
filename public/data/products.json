@@ -121,32 +121,6 @@
       "description": "The immortal Albiceleste sky blue and white striped kit worn by Diego Armando Maradona during the triumph of Mexico '86. Premium fabric with authentic retro AFA crest."
     },
     {
-      "id": "cc-003",
-      "slug": "arsenal-2003-04-invincibles-henry",
-      "name": "Arsenal 2003/04 Invincibles Retro — Henry #14",
-      "category": "Retro",
-      "subCategory": "Embroidered",
-      "team": "Arsenal",
-      "season": "2003/04",
-      "price": 1599,
-      "mrp": 2699,
-      "inStock": true,
-      "stockStatus": "In Stock",
-      "stockQuantity": 18,
-      "sizes": [
-        "S",
-        "M",
-        "L",
-        "XL"
-      ],
-      "images": [
-        "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=800&q=80"
-      ],
-      "featured": true,
-      "isRetro": true,
-      "description": "Historic Highbury red with clean white sleeves from Arsenal's unbeaten 49-game season. Classic stitched O2 chest sponsor and embroidered retro cannon badge."
-    },
-    {
       "id": "cc-004",
       "slug": "japan-2022-special-edition-anime",
       "name": "Japan 2022 Special Edition Origami Kit",

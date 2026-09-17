@@ -102,14 +102,18 @@ By default, the app uses Resend's sandbox (`onboarding@resend.dev`) and delivers
   - **Small Screens (Mobile Phones):** Fluid 1-column collapse (`minmax(min(100%, ...), 1fr)`), touch-swipe gesture carousel, full-width drawers, and viewport-bounded modals with zero horizontal scroll.
 - **Complete Trust & Policy Suite**:
   - Size & Fit Guide (`/size-guide`)
-  - Our Story & Brand Ethos (`/about`)
+  - Our Story & Brand Ethos (`/about`): Centered emblem and manifesto layout with responsive clamp typography.
   - Shipping Policy (`/shipping-policy`):
     - • **Metro Cities:** 3–5 Business Days
     - • **Rest of India:** 5–8 Business Days
   - Returns & Exchange Policy (`/returns-policy`) — 5–7 days sizing exchange.
   - Terms of Service (`/terms`) & Privacy Policy (`/privacy`).
   - **Bulk & Team Estimate Request Form (`/request-estimate`)**: Automated email quotation dispatch powered by **Resend** to `crownandcross29@gmail.com` with instant WhatsApp fallback.
-  - **Trust Guarantee Footer**: Verified UPI payment, Direct WhatsApp support, Pan-India dispatch, and 5-7 days size exchange badges.
+  - **Trust Guarantee Footer**: Priority UPI payee badge (**Jason Clement**), 1-click **Contact Us** & **Email Us** links, Pan-India dispatch, and 5-7 days size exchange badges.
+- **✨ Navigation & Header Polish**:
+  - Distinct static **Vintage Amber** (`#f59e0b`) highlight for **Retro Kits** that remains static on hover.
+  - Action-oriented **"Contact Us"** header button replacing raw phone numbers for a cleaner, modern look.
+  - Mobile drawer with structured **"Contact Us (WhatsApp)"** action.
 
 ---
 
@@ -133,8 +137,20 @@ RESEND_FROM_EMAIL=Crown & Cross <onboarding@resend.dev>
 ## 🎨 Design Tokens (Olive Green & Gold)
 
 - **Background:** Rich Pitch Olive (`#0d140f`), Surface Olive (`#131e17`), Elevated Olive (`#19271e`)
-- **Accents:** Champagne / Warm Gold (`#c8a96a`, `#dfc185`, `#f4e8cb`)
+- **Accents:** Champagne / Warm Gold (`#c8a96a`, `#dfc185`, `#f4e8cb`), Vintage Amber (`#f59e0b`)
 - **Typography:** Playfair Display (Serif Headings), Plus Jakarta Sans (UI Body), Bebas Neue (Sports Badges)
+
+---
+
+## 📜 Changelog
+
+### [Unreleased]
+#### Changed
+- **Header**: Replaced raw phone number display with clean, action-oriented **Contact Us** button linking directly to WhatsApp.
+- **Header**: Styled **Retro Kits** navigation link with a distinct static **Vintage Amber** (`#f59e0b`) accent with consistent hover rules.
+- **Footer**: Replaced raw phone number with **Contact Us** and raw email address with **Email Us** in the Support & Orders column.
+- **Footer**: Elevated **UPI Payee: Jason Clement** to the top of the Support & Orders section for immediate trust validation.
+- **About Page**: Centered the Crown & Cross logo image and manifesto headings with flexbox alignment and fluid clamp typography (`clamp(28px, 5vw, 42px)`).
 
 ---
 
@@ -145,7 +161,7 @@ RESEND_FROM_EMAIL=Crown & Cross <onboarding@resend.dev>
 ---
 
 ## 📞 Support & Inquiries
-- **WhatsApp:** [+91 76959 24602](https://wa.me/917695924602)
-- **Email:** crownandcross29@gmail.com
+- **WhatsApp:** [Contact Us](https://wa.me/917695924602) (+91 76959 24602)
+- **Email:** [Email Us](mailto:crownandcross29@gmail.com) (crownandcross29@gmail.com)
 - **Base:** Chennai, Tamil Nadu, India
 - **Owner:** Jason Clement

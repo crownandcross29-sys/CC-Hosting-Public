@@ -8,7 +8,17 @@ export const metadata = {
 export default function AboutPage() {
   return (
     <div style={{ maxWidth: '860px', margin: '60px auto 100px', padding: '0 24px' }}>
-      <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          textAlign: 'center',
+          marginBottom: '40px',
+          width: '100%'
+        }}
+      >
         <img
           src="/images/logo.jpeg"
           alt="Crown & Cross"
@@ -18,16 +28,46 @@ export default function AboutPage() {
             borderRadius: '16px',
             border: '2px solid var(--gold-primary)',
             boxShadow: '0 8px 24px rgba(0,0,0,0.6)',
-            marginBottom: '20px'
+            marginBottom: '20px',
+            display: 'block',
+            objectFit: 'cover'
           }}
         />
-        <span style={{ fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--gold-primary)' }}>
+        <span
+          style={{
+            display: 'block',
+            fontSize: '11px',
+            fontWeight: 800,
+            textTransform: 'uppercase',
+            letterSpacing: '0.08em',
+            color: 'var(--gold-primary)',
+            textAlign: 'center'
+          }}
+        >
           The Crown &amp; Cross Manifesto
         </span>
-        <h1 className="serif-heading" style={{ fontSize: '42px', fontWeight: 800, color: 'var(--text-primary)', marginTop: '8px' }}>
+        <h1
+          className="serif-heading"
+          style={{
+            fontSize: 'clamp(28px, 5vw, 42px)',
+            fontWeight: 800,
+            color: 'var(--text-primary)',
+            marginTop: '8px',
+            textAlign: 'center',
+            lineHeight: 1.2
+          }}
+        >
           Some wear fashion.<br />We wear football.
         </h1>
-        <p style={{ fontSize: '16px', color: 'var(--gold-light)', fontStyle: 'italic', marginTop: '12px' }}>
+        <p
+          style={{
+            fontSize: '16px',
+            color: 'var(--gold-light)',
+            fontStyle: 'italic',
+            marginTop: '12px',
+            textAlign: 'center'
+          }}
+        >
           "Wear Your Club. Wear Your Story."
         </p>
       </div>

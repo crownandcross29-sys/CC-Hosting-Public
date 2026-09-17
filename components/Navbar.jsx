@@ -92,10 +92,10 @@ export default function Navbar() {
             target="_blank"
             rel="noopener noreferrer"
             className="nav-wa-btn"
-            title="Chat on WhatsApp"
+            title="Contact Us on WhatsApp"
           >
             <MessageCircle size={15} />
-            <span className="hide-tablet-mobile">+91 76959 24602</span>
+            <span className="hide-tablet-mobile">Contact Us</span>
           </a>
 
           {/* Cart Drawer Toggle */}
@@ -159,7 +159,7 @@ export default function Navbar() {
             className="mobile-dropdown-wa"
           >
             <MessageCircle size={16} />
-            <span>Chat on WhatsApp (+91 76959 24602)</span>
+            <span>Contact Us (WhatsApp)</span>
           </a>
         </div>
       )}

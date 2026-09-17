@@ -59,7 +59,7 @@ export default function Footer() {
             </div>
             <div className="trust-text">
               <div className="trust-title">Live WhatsApp Support</div>
-              <div className="trust-sub">Direct line: +91 76959 24602</div>
+              <div className="trust-sub">Contact Us on WhatsApp</div>
             </div>
           </div>
         </div>
@@ -135,6 +135,9 @@ export default function Footer() {
           <div className="footer-col">
             <h4 className="col-heading">Support &amp; Orders</h4>
             <ul className="footer-link-list">
+              <li className="footer-info-item">
+                ⏱️ UPI Payee: <strong>Jason Clement</strong>
+              </li>
               <li>
                 <a
                   href={getWhatsAppUrl("Hello Crown & Cross, I have an inquiry about football jerseys.")}
@@ -142,17 +145,19 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="footer-wa-link"
+                  title="Contact Us on WhatsApp"
                 >
-                  💬 WhatsApp: +91 76959 24602
+                  💬 Contact Us
                 </a>
               </li>
               <li>
-                <a href="mailto:crownandcross29@gmail.com" className="footer-link">
-                  ✉️ crownandcross29@gmail.com
+                <a
+                  href="mailto:crownandcross29@gmail.com"
+                  className="footer-link"
+                  title="Email Us"
+                >
+                  ✉️ Email Us
                 </a>
-              </li>
-              <li className="footer-info-item">
-                ⏱️ UPI Payee: <strong>Jason Clement</strong>
               </li>
               <li className="delivery-item">
                 <Link
